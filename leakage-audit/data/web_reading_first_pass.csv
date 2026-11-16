@@ -1,0 +1,26 @@
+id,first_author,year,venue,time_input,time_evidence,oversample_before_split,headline,validation,source_read,notes
+P01,Chicco,2020,BMC Med Inform Decis Mak,no (main) / yes (secondary),"main analysis discards follow-up time; secondary stratified LR adds follow-up month",no,"main RF acc 0.740 AUC 0.800",repeated random splits,full text (PMC6998201),dataset intro paper; main result matches clean ceiling
+P02,Moreno-Sanchez (preprint),2021,arXiv,yes,"follow-up time selected as top feature",unclear,"bal acc 0.851",CV+holdout,abstract,same author later drops time
+P03,Moreno-Sanchez,2023,Front Cardiovasc Med,no,"time explicitly excluded as surrogate for classification",no (none used),"bal acc 0.74; C-index 0.714",CV+holdout,full text (PMC10434534),prior count: 12/14 related works use time
+P04,Fallah,2026,J Algorithms Comput,yes,"'The feature time is retained as an input'",no (in pipeline),"AUC 0.877 acc 0.817",80/20 + inner CV,full text,calls itself leakage-controlled
+P05,Khan NA,2025,IJ-ICT,yes (SHAP),"SHAP: 'Time emerges as the most crucial'",unclear,"acc 91.4%",not described,full text,
+P06,Qadri,2024,PeerJ Comput Sci,yes (all 13 attributes),"complete set of attributes; time in feature table",yes,"acc 97.5% (CV 98.7%)",80/20 + 10-fold,full text,
+P07,ALQahtani,2025,IJACSA,no (inferred),"7 Cox-selected features listed, time absent",n/a (headline unsampled),"acc 96.2% AUC 0.987",not described,full text,exceeds clean ceiling without time
+P08,Talukder,2023,arXiv 2308.05765,yes,"ET selected Time, EF, creatinine, age",no; scaling+selection before split,"acc 98.33% AUC 0.97",single 80/20,full text,
+P09,Zaman,2021,arXiv 2108.13367,yes (implied),"Time listed among 12 features; 'Time had the highest positive correlation'; never dropped",likely (SMOTE on 'the dataset' before split described),"acc 99.98%; AUC 0.99",single 80/20,full text,
+P10,(Hindawi 2022),2022,Hindawi 10.1155/2022/3649406,unclear,"no feature list or drop stated",yes (SMOTE-ENN then split),"test acc 90%; val acc 0.989",80/20 + CV,full text,
+P11,Setia,2025,JUTIF,yes,"final 8-feature set includes time; SHAP ranks time first",no (train only),"acc 96.67%; AUC 0.96",80/20 + inner 10-fold,full text,
+P12,Agustiyar,2026,J Intell Comput Health Inform,yes (implied),"M=12 features; text calls follow-up a 'retrospective survival proxy' but does not remove it",no (train only),"CV AUC 0.907; holdout AUC 0.872",80/20 + 5-fold,full text,acknowledges proxy yet keeps it
+P13,Alex,2024,AAAI symposium,yes,"RFE kept Age, EF, Serum Creatinine, and Time",unclear,"acc 95%; AUC 0.98",not specified,full text,trained and tested on Gretel synthetic data
+P14,Li EY,2025,Natl High School J Sci,no,"'excluding time to avoid label leakage'",no (train folds only),"test AUC 0.880; acc 78%; 2-feature CV AUC 0.99",70/30 + CV + 10 seeds,full text,2-feature CV AUC 0.99 is implausible
+P15,Haque,2024,arXiv 2407.08289,no (inferred),"inputs stated as serum creatinine and EF",no,"no numeric metric",not described,full text,excluded from metric comparison
+P16,Haque,2022,arXiv 2209.13799,unclear,"13 features listed, no selection or drop",no,"no standard metric",not described,full text,excluded from metric comparison
+P17,(EJMO),2025,Eurasian J Med Oncol,yes (importance),"RF regressor importance highlights time",unclear,"GBM acc ~73% (from confusion matrix)",unclear,partial page,
+P18,Kumar D,2021,Sensors,yes,"RF's five key features: 'Follow-up months, SC, EF, CPK, platelets'",unclear,"acc 96%",unclear,full text (PMC8512891),
+P19,Wilstrup,2022,BMC Med Inform Decis Mak,no (survival outcome),"Cox model; time is the outcome, not an input",no,"C-index 0.75; AUC 0.82 at 285 d",not stated,full text (PMC9316394),Moreno-Sanchez 2023 marks this 'time as feature'; that is a survival model so we disagree
+P20,Ozgur,2025,BMC Cardiovasc Disord,no (survival outcome),"Cox and RSF with time as outcome",no,"C-index 0.754 Cox / 0.884 RSF",not stated,abstract (PubMed),survival design
+P21,Rane,2026,arXiv 2608.04140,no (survival outcome),"person-period survival; leakage quantified separately",no,"clinical-only AUC 0.73-0.75",100 repeated splits,full text,names and quantifies the leak
+P22,Ishaq,2021,IEEE Access,yes (secondary),"Moreno-Sanchez 2023 marks time as feature; Umer 2022 says 'full set of features'",unclear,"acc 92.62% (ETC+SMOTE)",holdout,secondary only,
+P23,Umer,2022,Sensors,yes (implied),"13 features; no selection or drop described",n/a (DL without SMOTE),"acc 0.9289 (CNN)",holdout,full text (PMC9003513),
+P24,(Hindawi CIN),2021,Comput Intell Neurosci 10.1155/2021/8500314,unclear,"SelectKBest on 12 features; table not readable in text",no (train only),"RF test F1 ~96%",80/20,full text (PMC8712170),
+P25,Chen M,2026,BMC Med Inform Decis Mak,unclear,"time in feature table; SHAP list for dataset 2 omits it; no explicit statement",unclear,"acc 0.854",not checked,full text (PMC13681963),

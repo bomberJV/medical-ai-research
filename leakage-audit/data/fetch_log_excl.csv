@@ -1,0 +1,263 @@
+openalex,status,detail
+W7126192566,fail,short html 482
+W7124431832,fail,short html 122
+W7140276628,fail,HTTPError:HTTP Error 403: Forbidden
+W7157130886,fail,short html 482
+W7164316672,fail,HTTPError:HTTP Error 403: Forbidden
+W7139101985,pdf,https://assets-eu.researchsquare.com/files/rs-9085469/v1_covered_0aba1c49-b79f-48de-87d3-3556948a1f16.pdf?c=1773991497
+W7131214357,pdf,https://dergipark.org.tr/en/download/article-file/4950802
+W7143514815,pdf,https://adac.ee/index.php/stat/article/download/504/240
+W7154829343,pdf,https://bright-journal.org/Journal/index.php/JADS/article/download/999/636
+W7155554454,pdf,https://arxiv.org/pdf/2604.21252
+W7162293694,pdf,https://dergipark.org.tr/tr/download/article-file/5824349
+W7164316777,fail,short html 482
+W7171416136,pdf(meta),https://www.intechopen.com/online-first/1238940
+W7171988485,pdf,https://dergipark.org.tr/tr/download/article-file/5668021
+W7201959082,fail,short html 122
+W7202033169,pdf,https://journal.ilmudata.co.id/index.php/RIGGS/article/download/12189/9431
+W7213555183,fail,short html 5420
+W7214960687,fail,short html 259
+W7214974926,pdf,https://ph.pollub.pl/index.php/jcsi/article/download/9922/5604
+W7225061072,pdf,https://article.accscience.com/journal/AIH/online_first/aih026320111/article_aih0263201111_23e70c.pdf
+W7225301788,pdf,https://arxiv.org/pdf/2611.05442
+W7225760923,fail,HTTPError:HTTP Error 403: Forbidden
+W7172118103,fail,short html 482
+W7125613635,fail,HTTPError:HTTP Error 403: Forbidden
+W7214243449,fail,HTTPError:HTTP Error 403: Forbidden
+W7128607808,fail,short html 436
+W7135045617,fail,HTTPError:HTTP Error 403: Forbidden
+W7155064883,fail,HTTPError:HTTP Error 403: Forbidden
+W7155487646,fail,HTTPError:HTTP Error 403: Forbidden
+W7163692341,pdf,https://assets-eu.researchsquare.com/files/rs-8746299/v1/a89aee89-9757-4193-b4c6-ff04aa844c37.pdf?c=1781089570
+W7169830709,fail,short html 259
+W7212433852,fail,HTTPError:HTTP Error 403: Forbidden
+W7223455994,pdf,https://artefactumjournal.com/index.php/artefactum/article/download/4890/3417
+W4409450128,fail,short html 122
+W4407753721,html,https://www.ovid.com/jnls/spinejournal/fulltext/10.1097/brs.0000000000005303~the-role-of-the-lumbar-paravertebral-muscles-in-the
+W4412475085,fail,short html 482
+W4413170251,html,https://mjiri.iums.ac.ir/article-1-9654-en.html
+W4410246008,fail,HTTPError:HTTP Error 403: Forbidden
+W4413309825,fail,HTTPError:HTTP Error 403: Forbidden
+W4410124808,fail,short html 482
+W4413283240,fail,HTTPError:HTTP Error 403: Forbidden
+W4406433687,pdf,https://www.jmir.org:443/api/download?alt_name=mental_v12i1e67210_app2.pdf&filename=bd1d82742f57e597f740f4b4fb486767.pdf
+W4406803553,fail,short html 482
+W4415097841,html,https://www.ovid.com/jnls/md-journal/fulltext/10.1097/md.0000000000045147~the-role-of-machine-learning-methods-in-assessing-the-risk
+W4416830775,pdf,https://ejurnal.provisi.ac.id/index.php/JUISI/article/download/1297/951
+W4415524373,pdf,https://arxiv.org/pdf/2312.01991
+W4416964538,pdf,https://arxiv.org/pdf/2506.19082
+W4409223223,fail,short html 259
+W4407413713,pdf,https://sciresol.s3.us-east-2.amazonaws.com/IJST/Articles/2025/Issue-3/IJST-2024-3527.pdf
+W4416917980,fail,short html 122
+W4412508770,pdf,https://e-journal.stmiklombok.ac.id/index.php/jire/article/download/1541/443
+W4409362507,fail,short html 5502
+W4411868207,fail,short html 482
+W4414334430,html,https://www.cambridge.org/core/journals/journal-of-dairy-research/article/abs/supervised-machine-learning-approach-for-the-decisionmaking-process-on-databased-culling-in-dairy-farms/26FC0177F49E621BEA70B342675D2E46
+W4414970844,pdf,https://e-journal.ivet.ac.id/index.php/jsite/article/download/4214/2761
+W4417153701,fail,HTTPError:HTTP Error 403: Forbidden
+W7117673949,fail,short html 5537
+W4414706806,fail,HTTPError:HTTP Error 403: Forbidden
+W4406810503,pdf(meta),https://wjarr.com/content/survival-analysis-heart-failure-patient-using-kaplan-meier-methods
+W4408297806,pdf,https://www.bio-conferences.org/articles/bioconf/pdf/2025/17/bioconf_icbemd2025_02003.pdf
+W4414957230,pdf,https://e-journal.ivet.ac.id/index.php/jsite/article/download/4214/2761/
+W4416196075,fail,HTTPError:HTTP Error 403: Forbidden
+W4417249480,fail,short html 259
+W4417446108,pdf,https://arxiv.org/pdf/2512.11833
+W7126056956,fail,short html 259
+W7128811047,fail,short html 259
+W7131077978,fail,short html 259
+W4412050318,fail,short html 482
+W4406287309,fail,short html 482
+W4410978450,pdf,https://ujsds.ppj.unp.ac.id/index.php/ujsds/en/article/download/359/198
+W4410340775,fail,HTTPError:HTTP Error 403: Forbidden
+W4413111571,fail,short html 715
+W4414992876,fail,HTTPError:HTTP Error 403: Forbidden
+W4395075802,fail,short html 482
+W4400368811,fail,short html 482
+W4392660779,pdf,https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0290332&type=printable
+W4402980541,fail,short html 259
+W4393255112,fail,short html 122
+W4404935482,fail,HTTPError:HTTP Error 403: Forbidden
+W4391932988,pdf,https://assets-eu.researchsquare.com/files/rs-3173147/v1_covered_e5ba24d2-bc6b-4c1d-8297-ffa45d1c0d58.pdf?c=1708960460
+W4392366514,pdf,https://sciresol.s3.us-east-2.amazonaws.com/IJST/Articles/2024/Issue-9/IJST-2024--2938.pdf
+W4403132856,pdf,https://hrcak.srce.hr/file/464126
+W4400771588,pdf,https://arxiv.org/pdf/2409.18499
+W4404468566,fail,HTTPError:HTTP Error 403: Forbidden
+W4404079772,pdf,https://arxiv.org/pdf/2204.10438
+W4396230088,pdf,https://dergipark.org.tr/tr/download/article-file/3698084
+W4400957433,pdf,https://informatica.vu.lt/journal/INFORMATICA/article/1342/file/pdf
+W4402995155,fail,short html 482
+W4391651703,pdf,https://api.intechopen.com/chapter/pdf-download/1183357.pdf
+W4399090850,fail,short html 29
+W4404486813,fail,short html 482
+W4393273826,fail,HTTPError:HTTP Error 403: Forbidden
+W4391389632,fail,HTTPError:HTTP Error 403: Forbidden
+W4406328976,fail,HTTPError:HTTP Error 403: Forbidden
+W4391941081,fail,HTTPError:HTTP Error 403: Forbidden
+W4400027213,fail,HTTPError:HTTP Error 403: Forbidden
+W4393235268,pdf,https://assets-eu.researchsquare.com/files/rs-4270409/v1_covered_2691c2e2-9dc4-4ade-a944-aa30a1c43bcb.pdf?c=1715008602
+W4399264907,pdf(meta),https://www.communitymedicinejournal.com/article/view/impacts-of-serum-creatinine-phosphokinase-on-heart-diabetes-and-anaemia-patients
+W4400227982,fail,HTTPError:HTTP Error 403: Forbidden
+W4400231981,fail,short html 259
+W4402211428,pdf,https://www.medrxiv.org/content/medrxiv/early/2024/09/04/2024.09.03.24312945.full.pdf
+W4406199086,pdf,https://sol.sbc.org.br/index.php/bsb/article/download/32637/32434
+W7208732819,pdf,https://periodicos.ufmg.br/index.php/revistadaufmg/article/download/47705/44001
+W4396694991,fail,short html 482
+W4390837692,fail,short html 482
+W4391970158,fail,HTTPError:HTTP Error 403: Forbidden
+W4401806706,fail,short html 259
+W4392905021,fail,short html 259
+W4393363781,pdf,https://www.mecs-press.org/ijeme/ijeme-v14-n2/IJEME-V14-N2-2.pdf
+W4402901187,fail,HTTPError:HTTP Error 403: Forbidden
+W4392473636,pdf,https://assets-eu.researchsquare.com/files/rs-3993213/v1/ba486dcf-5c2c-47da-bfc7-ad582b97a311.pdf?c=1711601036
+W4399385910,fail,HTTPError:HTTP Error 403: Forbidden
+W4323047476,fail,HTTPError:HTTP Error 403: Forbidden
+W4313584062,fail,HTTPError:HTTP Error 403: Forbidden
+W4388948912,fail,short html 122
+W4390489272,fail,short html 259
+W4389160978,pdf,https://arxiv.org/pdf/2305.06585
+W4391094351,pdf,https://arxiv.org/pdf/2311.11516
+W4386849374,fail,HTTPError:HTTP Error 403: Forbidden
+W4389542682,fail,short html 259
+W4389724391,fail,short html 259
+W4320920849,pdf,https://www.frontiersin.org/journals/bioinformatics/articles/10.3389/fbinf.2023.1082941/pdf
+W4388105897,fail,short html 122
+W4367833105,pdf,https://dergipark.org.tr/tr/download/article-file/2118873
+W4385982083,fail,short html 122
+W4386158416,fail,short html 122
+W4387423023,pdf,https://jqcsm.qu.edu.iq/index.php/journalcm/article/download/1139/756
+W4379260339,fail,HTTPError:HTTP Error 403: Forbidden
+W4362701627,fail,HTTPError:HTTP Error 403: Forbidden
+W4368227696,fail,short html 259
+W4386207964,fail,short html 259
+W4390346782,fail,HTTPError:HTTP Error 403: Forbidden
+W4361805567,fail,HTTPError:HTTP Error 403: Forbidden
+W4387697630,fail,short html 376
+W4391952730,fail,short html 259
+W4366366167,fail,short html 259
+W4390651113,fail,URLError:<urlopen error [WinError 10060] A connection attempt failed because the connecte
+W4391093417,pdf,https://arxiv.org/pdf/2212.11360
+W4317376684,pdf(meta),https://www.researchsquare.com/article/rs-2027767/v2
+W4385902042,pdf,https://arxiv.org/pdf/2308.01319
+W4365935184,pdf,https://www.opastpublishers.com/open-access-articles/mortality-rate-prediction-for-patients-admitted-to-intensive-care-unit-based-on-apache-iv.pdf
+W4382058293,fail,short html 259
+W4387096640,pdf,https://ojs.focopublicacoes.com.br/foco/article/download/3182/2086
+W4388203754,pdf,https://ijeces.ferit.hr/index.php/ijeces/article/download/2556/331
+W7219256848,pdf,https://abis-files.yildiz.edu.tr/avesis/9b730e6c-db5d-44af-aaac-61598abbbdca?AWSAccessKeyId=6D327F5837HU474MD1QL&Expires=1794799080&Signature=dQ4U%2BFhBAxRkj9hTzDjl2Gqrk04%3D
+W4385645347,fail,short html 482
+W4323348797,pdf,https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0282637&type=printable
+W4388380084,fail,HTTPError:HTTP Error 403: Forbidden
+W4389674212,pdf,https://jhrlmc.com/index.php/home/article/download/142/152
+W4360990164,pdf,https://journals.e-palli.com/home/index.php/ajmsi/article/download/1184/520
+W4391494117,html,https://openventio.us/index.php/IMOJ/article/view/1066
+W4362467600,fail,HTTPError:HTTP Error 403: Forbidden
+W4383094457,fail,HTTPError:HTTP Error 429: Too Many Requests
+W4390451041,pdf,https://researchlakejournals.com/index.php/IJDM/article/download/273/233
+W7217602104,html,https://openventio.us/index.php/HROJ/article/view/857
+W4223918474,fail,short html 482
+W4313529719,fail,short html 122
+W4312241754,fail,HTTPError:HTTP Error 403: Forbidden
+W4225353299,fail,short html 482
+W4306726673,fail,short html 122
+W4223934638,fail,HTTPError:HTTP Error 403: Forbidden
+W4297095629,fail,short html 259
+W4312654986,fail,short html 259
+W4287378307,fail,short html 482
+W4307391038,fail,short html 482
+W4295851966,pdf(meta),https://ejournal.unesa.ac.id/index.php/mathunesa/article/view/45652
+W4310145190,fail,short html 259
+W4306411000,fail,HTTPError:HTTP Error 403: Forbidden
+W4313472309,fail,HTTPError:HTTP Error 403: Forbidden
+W4315645717,fail,URLError:<urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unabl
+W4311414610,fail,short html 259
+W4311576096,fail,short html 482
+W4312048753,pdf(meta),https://www.dovepress.com/a-novel-nomogram-integrated-with-systemic-inflammation-markers-and-tra-peer-reviewed-fulltext-article-JIR
+W4313271596,fail,short html 259
+W4220730260,fail,short html 482
+W4210400325,fail,short html 259
+W4376457540,fail,short html 259
+W4308923757,fail,short html 122
+W4310866308,html,https://dergipark.org.tr/tr/pub/ij3dptdi/article/982670
+W4311398608,fail,HTTPError:HTTP Error 403: Forbidden
+W4220713468,fail,short html 259
+W4229334056,fail,HTTPError:HTTP Error 403: Forbidden
+W4315786042,pdf,https://www.iieta.org/download/file/fid/86808
+W4221139487,pdf,https://arxiv.org/pdf/2203.07527
+W4285805225,fail,HTTPError:HTTP Error 403: Forbidden
+W4318148225,fail,short html 259
+W4294771895,fail,HTTPError:HTTP Error 403: Forbidden
+W3217458738,pdf,https://api.intechopen.com/chapter/pdf-download/78930.pdf
+W4383000776,pdf,https://jurnal.untan.ac.id/index.php/jepin/article/download/54328/75676594348
+W4296236032,pdf,https://assets-eu.researchsquare.com/files/rs-2027767/v2/e8fda1f9-37c0-4d66-8900-22c3b63b568a.pdf?c=1678040074
+W4220727806,pdf,https://liu.diva-portal.org/smash/get/diva2:1626065/FULLTEXT01
+W4281788376,pdf,https://assets-eu.researchsquare.com/files/rs-1560908/v1_covered.pdf?c=1654528912
+W4283650507,fail,short html 259
+W4407071439,pdf,https://hl.ageditor.ar/index.php/hl/article/download/112/852
+W7220643156,pdf,https://journal.ubpkarawang.ac.id/mahasiswa/ssj/article/download/428/342
+W4307572272,fail,short html 482
+W4310067026,fail,short html 122
+W4229007395,pdf,https://www.frontiersin.org/journals/cardiovascular-medicine/articles/10.3389/fcvm.2022.817074/pdf
+W4300716946,fail,HTTPError:HTTP Error 403: Forbidden
+W4308678754,fail,HTTPError:HTTP Error 403: Forbidden
+W4306896993,pdf,https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0276440&type=printable
+W4293253615,pdf(meta),https://arxiv.org/abs/2208.10759
+W4292862258,fail,short html 259
+W4293236146,fail,short html 2538
+W4293236215,fail,short html 2538
+W4308656674,pdf,http://jgmds.org.pk/index.php/JGMDS/article/download/238/219
+W4312757208,fail,HTTPError:HTTP Error 403: Forbidden
+W3197552266,fail,short html 482
+W3134636986,fail,HTTPError:HTTP Error 403: Forbidden
+W3139397034,pdf,https://ieeexplore.ieee.org/ielx7/6287639/9312710/09385097.pdf
+W4200198551,pdf,https://inass.org/wp-content/uploads/2021/10/2021123119.pdf
+W3195963873,fail,short html 259
+W3200921446,pdf,https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2021.729795/pdf
+W3126154634,pdf,https://ieeexplore.ieee.org/ielx7/6287639/9312710/09347427.pdf
+W3159761806,pdf,https://ejournal.unib.ac.id/index.php/pseudocode/article/download/14446/7237
+W3006369420,pdf,https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0254062&type=printable
+W3196576232,fail,short html 259
+W3132718350,fail,HTTPError:HTTP Error 403: Forbidden
+W3198329757,pdf,https://www.dovepress.com/article/download/68296
+W3206666534,fail,short html 482
+W3128825412,fail,short html 482
+W3171882535,fail,HTTPError:HTTP Error 403: Forbidden
+W3207310172,fail,HTTPError:HTTP Error 403: Forbidden
+W3146214927,pdf,https://ejurnal.ars.ac.id/index.php/jti/article/download/396/278
+W3175684659,pdf,https://www.ijcaonline.org/archives/volume183/number6/bond-2021-ijca-921339.pdf
+W3199418057,fail,HTTPError:HTTP Error 403: Forbidden
+W3185057800,fail,HTTPError:HTTP Error 403: Forbidden
+W3189958891,fail,short html 482
+W3194004818,fail,HTTPError:HTTP Error 403: Forbidden
+W3162518928,pdf,https://ieeexplore.ieee.org/ielx7/6287639/9312710/09431098.pdf
+W3185147224,fail,HTTPError:HTTP Error 403: Forbidden
+W3142315931,pdf,https://dergipark.org.tr/tr/download/article-file/1659219
+W4200307529,pdf,https://ifigenia.org/images/c/cb/NIFS-27-4-71-77.pdf
+W3196411217,fail,short html 668
+W3203811059,fail,short html 259
+W3152315440,fail,URLError:<urlopen error [Errno 11001] getaddrinfo failed>
+W4213162110,fail,short html 259
+W3136568211,fail,short html 668
+W3162180810,pdf,https://dergipark.org.tr/tr/download/article-file/1755336
+W3172695780,pdf,https://kinetik.umm.ac.id/index.php/kinetik/article/download/1209/124124262
+W3186324271,fail,HTTPError:HTTP Error 403: Forbidden
+W3158921866,fail,short html 482
+W3195160421,pdf,https://arxiv.org/pdf/2108.07908
+W4200240479,pdf,https://assets-eu.researchsquare.com/files/rs-1030456/v1_covered.pdf?c=1640115872
+W4207062523,fail,short html 259
+W4291127589,pdf,http://fcs.wum.edu.pk/index.php/ojs/article/download/15/25
+W7131970550,html,https://www.neliti.com/publications/469258/kombinasi-metode-k-nearest-neighbor-dengan-cosine-similarity-untuk-prediksi-sera
+W4206588315,fail,HTTPError:HTTP Error 403: Forbidden
+W4200508055,fail,short html 482
+W4205094022,fail,short html 259
+W3211679915,html,https://pmc.ncbi.nlm.nih.gov/articles/PMC9930795/
+W3206773972,pdf(meta),https://www.dovepress.com/joint-modeling-of-longitudinal-pulse-rate-and-time-to-default-from-tre-peer-reviewed-fulltext-article-RRCC
+W3215992805,fail,HTTPError:HTTP Error 403: Forbidden
+W3137994596,pdf,https://assets-eu.researchsquare.com/files/rs-228538/v1/b0137f52-e34e-40ff-9ea8-135718fe6242.pdf?c=1631879111
+W3007316198,fail,HTTPError:HTTP Error 403: Forbidden
+W3092005729,fail,short html 482
+W3112675552,pdf,https://assets-eu.researchsquare.com/files/rs-111012/v1/819f6081-d995-41b5-9616-ffebdf381698.pdf?c=1631861489
+W3088880246,fail,HTTPError:HTTP Error 403: Forbidden
+W3084702730,pdf,https://content.scirp.org/pdf/ojn_2020091614390582.pdf
+W3102098098,fail,HTTPError:HTTP Error 403: Forbidden
+W2968020416,fail,short html 482
+W2915260273,pdf(meta),https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0210602
