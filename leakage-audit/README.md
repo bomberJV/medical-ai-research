@@ -6,15 +6,16 @@ Status: draft, pending independent human verification of every coding. Not peer-
 
 ## Main numbers
 
-- 107 classification studies coded: 56 used follow-up time, 13 excluded it, 38 unclear. Of the 69 that could be determined, 81% used it (71% counting only explicit statements).
-- 2024–2026: 31 of 38 determinable studies used it, after the issue was flagged in 2023.
+- 105 classification studies coded: 55 used follow-up time, 12 excluded it, 38 unclear. Of the 67 that could be determined, 82% used it (73% counting only explicit statements).
+- 2024–2026: 30 of 36 determinable studies used it, after the issue was flagged in 2023.
+- 28 studies report accuracy of 90% or more: 19 used time, 7 unclear, 2 did not. 4 of the 28 trained on synthetic or expanded versions of the dataset (a 5,000-record Kaggle version, or generated records), not the 299 patients.
 - Random forest, 5×20 cross-validation: AUROC 0.79 on the 11 clinical features, 0.91 with `time`, 0.96 with `time` and SMOTE applied before the split.
 
 ## Contents
 
 | Path | What it is |
 | --- | --- |
-| `data/coded_studies.csv` | All 134 coded works: OpenAlex ID, citation frame or search, design, time code, oversampling note, headline metric, evidence note |
+| `data/coded_studies.csv` | All 134 coded works: OpenAlex ID, citation frame or search, design, data used (299 patients or a synthetic/expanded version), time code, oversampling note, headline metric, evidence note |
 | `data/screen1.csv` | All 764 works citing the two source papers (OpenAlex, retrieved 2026-11-15), with the first abstract-level screen |
 | `data/extract.csv` | Dataset-signature scores and evidence counts for the 241 full texts obtained |
 | `data/fetch_log*.csv` | Full-text retrieval outcome per work |
@@ -55,4 +56,4 @@ Full texts are not included: they belong to their publishers. OpenAlex results c
 
 ## Limits
 
-Full text was obtained for 241 of 764 citing works; 67 likely-relevant paywalled works are unassessed. 24 "used" codes are implied. Oversampling placement is usually unstated. Coding was done by an AI system in two passes and must be checked by a person before publication.
+Full text was obtained for 241 of 764 citing works; 67 likely-relevant paywalled works are unassessed. 24 "used" codes are implied. Oversampling placement is usually unstated. Coding was done by an AI system in two passes, plus a third pass that checked every statement about a named study against its full text (corrections are marked "review 2026-11-15" in the notes column). It must be checked by a person before publication. Two near-duplicate texts are counted once.

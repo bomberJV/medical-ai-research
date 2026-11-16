@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#101710">
 <title>The leak in plain sight — Brandon Frank Han-Chween Huang</title>
-<meta name="description" content="Most published classifiers on a 299-patient heart-failure dataset were given the answer. An interactive audit of 107 studies.">
+<meta name="description" content="Most published classifiers on a 299-patient heart-failure dataset used a column that partly contains the outcome. An interactive audit of 105 studies.">
 <link rel="stylesheet" href="../shared/play.css">
 <link rel="stylesheet" href="app.css">
 <link rel="stylesheet" href="leakage.css">
@@ -20,7 +20,7 @@
     <p class="kicker">RESEARCH LAB 07 / AUDIT</p>
     <h1>The leak in<br><em>plain sight</em></h1>
     <p class="intro">A public dataset of 299 heart-failure patients has been used in hundreds of papers. Most of the models built on it were given a column that partly contains the answer. See what that column does to a score, then how often it was used.</p>
-    <div class="tags"><span>764 citing works screened</span><span>107 classifiers coded</span><span>Draft · pending review</span></div>
+    <div class="tags"><span>764 citing works screened</span><span>105 classifiers coded</span><span>Draft · pending review</span></div>
   </div>
   <div class="hero-signal" aria-hidden="true"><svg viewBox="0 0 280 230"><path d="M10 190H60L60 150 110 150 110 110 160 110 160 60 210 60 210 30 270 30"/><circle cx="270" cy="30" r="7"/><text x="15" y="220">HOW 74% BECOMES 96%</text></svg></div>
 </section>
@@ -64,7 +64,7 @@
       <div class="gauge"><span class="gauge-num" id="score">–</span><span class="gauge-label" id="scorelabel">average, 100 cross-validation runs</span></div>
       <svg id="claims" class="main-chart" viewBox="0 0 760 170" role="img" aria-label="The current setup's accuracy against the accuracies published studies report"></svg>
       <div class="legend"><span class="pink">study included follow-up time</span><span>left it out</span><span class="empty">could not tell</span></div>
-      <p class="plot-caption">Each dot is the accuracy (or F1) one of 64 coded studies reports. The bar is the setup you have selected.</p>
+      <p class="plot-caption">Each mark is the accuracy (or F1) one of 61 coded studies reports. Squares: trained on synthetic or expanded data, not the 299 patients. The bar is the setup you have selected.</p>
     </div>
     <aside>
       <h3>Then report a single split.</h3>

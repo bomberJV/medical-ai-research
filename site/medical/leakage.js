@@ -59,8 +59,10 @@ const data = await fetch('leakage-data.json').then(r => r.json());
     svg.append(el('text', {x: left, y: 135, class: 'strong'}, 'Survived to the end of follow-up'));
     for (const d of (W < 500 ? [0, 100, 200] : [0, 50, 100, 150, 200, 250])) svg.append(el('text', {x: x(d), y: 240, 'text-anchor': d ? 'middle' : 'start'}, `${d} d`));
     for (const d of pts) { d.c = el('circle', {cx: x(d.t), cy: rows[d.died] + d.j * 44, r: W < 500 ? 3.2 : 4}); svg.append(d.c); }
-    line = el('line', {y1: 40, y2: 215, stroke: 'var(--pink)', 'stroke-width': 2});
-    svg.append(line); paint();
+    // Two segments, one per row of dots, so the cutoff never crosses the row labels.
+    const segs = [el('line', {y1: 46, y2: 110}), el('line', {y1: 150, y2: 218})];
+    for (const g of segs) { g.setAttribute('stroke', 'var(--pink)'); g.setAttribute('stroke-width', 2); svg.append(g); }
+    line = {setAttribute: (k, v) => segs.forEach(g => g.setAttribute(k, v))}; paint();
   });
   cut.addEventListener('input', () => { chosen = false; paint(); });
   $('bestcut').addEventListener('click', () => {
@@ -109,8 +111,9 @@ const data = await fetch('leakage-data.json').then(r => r.json());
     }
     for (const s of studies) {
       const used = s.code === 'used', out = s.code === 'not used';
-      svg.append(el('circle', {cx: x(Math.min(s.acc, 100) / 100), cy: 75 + s.j * 60, r: W < 500 ? 4 : 5,
-        fill: used ? 'var(--pink)' : out ? 'var(--lime)' : 'transparent', stroke: used ? 'var(--pink)' : out ? 'var(--lime)' : '#6f8366', 'stroke-width': 2, 'fill-opacity': 0.75}));
+      const r = W < 500 ? 4 : 5, cx = x(Math.min(s.acc, 100) / 100), cy = 75 + s.j * 60;
+      const style = {fill: used ? 'var(--pink)' : out ? 'var(--lime)' : 'transparent', stroke: used ? 'var(--pink)' : out ? 'var(--lime)' : '#6f8366', 'stroke-width': 2, 'fill-opacity': 0.75};
+      svg.append(s.synthetic ? el('rect', {x: cx - r, y: cy - r, width: 2 * r, height: 2 * r, ...style}) : el('circle', {cx, cy, r, ...style}));
     }
     mark = el('rect', {y: 16, width: 4, height: 116, class: 'mark'});
     markLabel = el('text', {y: 11, class: 'strong', 'text-anchor': 'middle'}, 'THIS SETUP');
