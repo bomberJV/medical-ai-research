@@ -9,14 +9,11 @@
 #t-time[aria-pressed=true],#t-smote[aria-pressed=true]{background:var(--pink);border-color:var(--pink);color:#2a1219}
 .leaknote{min-height:60px}
 .leaknote b{color:var(--pink)}
-.legend .ring:before{background:transparent;border:2px solid var(--lime);box-sizing:border-box}
-.main-chart .dot{cursor:pointer;outline:none}
-.main-chart .dot:hover,.main-chart .dot:focus{stroke:#fff;stroke-width:2}
-.main-chart .faded{opacity:.12}
+.leak-section .legend{margin:14px 0 6px}
 .main-chart .warn{stroke:var(--pink);stroke-dasharray:4 4}
-.main-chart .you{fill:var(--lime);transition:x .4s}
-.main-chart .you.leaky{fill:var(--pink)}
+.main-chart .mark{fill:var(--lime);transition:x .4s}
+.main-chart .mark.leaky{fill:var(--pink)}
 .main-chart text.strong{fill:var(--ink)}
-@media(max-width:850px){.workbench{grid-template-columns:1fr}.workbench aside{border-left:0;border-top:1px solid var(--line)}}
-@media(prefers-reduced-motion:reduce){.gauge-num,.main-chart .you{transition:none}}
-@media(max-width:600px){.leak-section .visual{overflow-x:auto}.leak-section .main-chart{min-width:600px}}
+.main-chart text.onbar{fill:#2a1219;font-weight:700}
+@media(max-width:850px){.workbench{grid-template-columns:1fr}.workbench aside{border-left:0;border-top:1px solid var(--line)}.leak-section .visual{padding:18px 14px}}
+@media(prefers-reduced-motion:reduce){.gauge-num,.main-chart .mark{transition:none}}

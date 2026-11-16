@@ -19,10 +19,10 @@
   <div>
     <p class="kicker">RESEARCH LAB 07 / AUDIT</p>
     <h1>The leak in<br><em>plain sight</em></h1>
-    <p class="intro">A public dataset of 299 heart-failure patients has been used in hundreds of papers. Most of the models built on it were quietly given the answer. Try the trick yourself, then see how often it was used.</p>
+    <p class="intro">A public dataset of 299 heart-failure patients has been used in hundreds of papers. Most of the models built on it were given a column that partly contains the answer. See what that column does to a score, then how often it was used.</p>
     <div class="tags"><span>764 citing works screened</span><span>107 classifiers coded</span><span>Draft · pending review</span></div>
   </div>
-  <div class="hero-signal" aria-hidden="true"><svg viewBox="0 0 280 230"><path d="M10 190H60L60 150 110 150 110 110 160 110 160 60 210 60 210 30 270 30"/><circle cx="270" cy="30" r="7"/><text x="15" y="220">74% → 96% WITHOUT LEARNING ANYTHING</text></svg></div>
+  <div class="hero-signal" aria-hidden="true"><svg viewBox="0 0 280 230"><path d="M10 190H60L60 150 110 150 110 110 160 110 160 60 210 60 210 30 270 30"/><circle cx="270" cy="30" r="7"/><text x="15" y="220">HOW 74% BECOMES 96%</text></svg></div>
 </section>
 
 <div class="scope-note"><b>Research, not a medical tool.</b> This page re-analyses a historic public dataset and the published studies that used it. Nothing here predicts anyone's health. The literature coding is AI-assisted and is still being checked by a person; study names are withheld until it is.</div>
@@ -51,26 +51,27 @@
 
 <section class="leak-section" aria-labelledby="s2">
   <div class="experiment-heading"><div>
-    <p class="kicker">02 / THE RECIPE</p>
-    <h2 id="s2">Cheat your way to a publishable number.</h2>
-    <p>Start from an honest random forest. Switch on the shortcuts we found in published papers and watch the score climb. Every number comes from models actually trained on this dataset.</p>
+    <p class="kicker">02 / HOW SCORES INFLATE</p>
+    <h2 id="s2">Three ordinary choices take 74% to 96%.</h2>
+    <p>Start from a random forest evaluated correctly. Switch on two choices that appear in published papers and are easy to make by accident, then look at single test splits. Every number comes from models trained on this dataset.</p>
   </div></div>
   <div class="workbench">
     <div class="visual">
-      <div class="options" role="group" aria-label="Shortcuts">
-        <button id="t-time" type="button" aria-pressed="false">+ Feed it follow-up time</button>
-        <button id="t-smote" type="button" aria-pressed="false">+ Make synthetic patients before splitting</button>
+      <div class="options" role="group" aria-label="Modelling choices">
+        <button id="t-time" type="button" aria-pressed="false">Include follow-up time as an input</button>
+        <button id="t-smote" type="button" aria-pressed="false">Oversample before the train/test split</button>
       </div>
-      <div class="gauge"><span class="gauge-num" id="score">–</span><span class="gauge-label" id="scorelabel">honest average, 100 cross-validation runs</span></div>
-      <svg id="claims" class="main-chart" viewBox="0 0 760 170" role="img" aria-label="Your score against the accuracies published studies report"></svg>
-      <p class="plot-caption">Dots: accuracy (or F1) reported by 64 coded studies. Pink: the study fed follow-up time to its model. Green ring: it left time out. Grey: we could not tell. The bar is you.</p>
+      <div class="gauge"><span class="gauge-num" id="score">–</span><span class="gauge-label" id="scorelabel">average, 100 cross-validation runs</span></div>
+      <svg id="claims" class="main-chart" viewBox="0 0 760 170" role="img" aria-label="The current setup's accuracy against the accuracies published studies report"></svg>
+      <div class="legend"><span class="pink">study included follow-up time</span><span>left it out</span><span class="empty">could not tell</span></div>
+      <p class="plot-caption">Each dot is the accuracy (or F1) one of 64 coded studies reports. The bar is the setup you have selected.</p>
     </div>
     <aside>
-      <h3>Then pick your test set.</h3>
-      <p>Papers often report one random train/test split. Reroll until you like the number.</p>
-      <div class="toolbar"><button id="reroll" type="button" class="primary">Reroll the split</button><button id="reset" type="button">Reset</button></div>
-      <div class="mini-stat"><b id="rolls">0</b><span>splits tried</span></div>
-      <div class="mini-stat"><b id="best">–</b><span>best split so far (what gets reported)</span></div>
+      <h3>Then report a single split.</h3>
+      <p>Many papers report one random train/test split. With about 60 test patients, the result moves several points from split to split. Draw a few.</p>
+      <div class="toolbar"><button id="reroll" type="button" class="primary">Draw another split</button><button id="reset" type="button">Reset</button></div>
+      <div class="mini-stat"><b id="rolls">0</b><span>splits drawn</span></div>
+      <div class="mini-stat"><b id="best">–</b><span>highest split so far</span></div>
       <p id="leaknote" class="leaknote"></p>
     </aside>
   </div>
@@ -79,32 +80,27 @@
 <section class="leak-section" aria-labelledby="s3">
   <div class="experiment-heading"><div>
     <p class="kicker">03 / THE LITERATURE</p>
-    <h2 id="s3">Most studies used the shortcut, and kept using it after it was flagged.</h2>
-    <p>Each dot is one classification study on this dataset, by publication year. A 2023 paper called the column a surrogate for the outcome. The pattern did not change.</p>
+    <h2 id="s3">Most studies included follow-up time, before and after it was flagged.</h2>
+    <p>Classification studies on this dataset by publication year. A 2023 paper called the column a surrogate for the outcome. The share that include it did not fall.</p>
   </div></div>
   <div class="workbench">
     <div class="visual">
-      <div class="options" role="group" aria-label="Filter studies">
-        <button data-f="all" type="button" aria-pressed="true">All 107</button>
-        <button data-f="hi" type="button" aria-pressed="false">Reported 90% or more</button>
-        <button data-f="explicit" type="button" aria-pressed="false">Stated outright only</button>
-      </div>
-      <svg id="years" class="main-chart" viewBox="0 0 760 210" role="img" aria-label="Coded studies by year and use of follow-up time"></svg>
-      <div class="legend"><span class="pink">used follow-up time</span><span class="ring">left it out</span><span class="empty">could not tell</span></div>
-      <div class="case-readout" id="studyread" aria-live="polite">Hover or tab to a dot.</div>
+      <svg id="years" class="main-chart" viewBox="0 0 760 270" role="img" aria-label="Coded studies by year and use of follow-up time"></svg>
+      <div class="legend"><span class="pink">included follow-up time</span><span>left it out</span><span class="empty">could not tell</span></div>
+      <p class="plot-caption">Number in the pink bar: studies that included follow-up time. Number above: all coded studies that year.</p>
     </div>
     <aside>
       <h3 id="share">–</h3>
       <p id="sharenote"></p>
-      <div class="mini-stat"><b id="late">–</b><span>of determinable studies from 2024–2026 used it</span></div>
-      <p>“Could not tell” mostly means the paper never lists its inputs. Paywalled papers we could not read are not shown.</p>
+      <div class="mini-stat"><b id="late">–</b><span>studies from 2024–2026 whose inputs we could determine included it</span></div>
+      <p>“Could not tell” mostly means the paper never lists its inputs. Paywalled papers we could not read are not shown. A searchable table of the studies, with the evidence for each, will be added once the coding has been checked by a person.</p>
     </aside>
   </div>
 </section>
 
 <section class="takeaway">
   <h3>What to take from this</h3>
-  <p>Without follow-up time, honest models on this dataset land around 74% accuracy (AUROC about 0.80). Claims of 95–100% are not better medicine; they are the shortcut, synthetic patients that leak across the split, and a lucky test set. If you use this dataset: drop <code>time</code>, or make it the outcome of a survival model, and oversample only inside training folds.</p>
+  <p>Without follow-up time, honest models on this dataset land around 74% accuracy (AUROC about 0.80). Reported accuracies of 90% and above are largely explained by follow-up time as an input, oversampling before the split, and reporting a single split, not by better models. If you use this dataset: drop <code>time</code>, or make it the outcome of a survival model, and oversample only inside training folds.</p>
 </section>
 
 <section class="open-methods">
