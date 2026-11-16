@@ -1,5 +1,8 @@
 # Medical AI, under pressure
 
+[Project priorities and agent handoff](https://github.com/bomberJV/brandon-studio/tree/priority-hub/priorities)
+
+
 Three actual, reproducible benchmark experiments prepared for Brandon Frank Han-Chween Huang with AI-assisted analysis and writing. Public data; no clinical service, patient-input interface, or new patient collection. Study date: November 13, 2026.
 
 ## Run
