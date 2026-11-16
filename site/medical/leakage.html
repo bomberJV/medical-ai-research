@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101710">
+<title>The leak in plain sight — Brandon Frank Han-Chween Huang</title>
+<meta name="description" content="Most published classifiers on a 299-patient heart-failure dataset were given the answer. An interactive audit of 107 studies.">
+<link rel="stylesheet" href="../shared/play.css">
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="leakage.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to the audit</a>
+<header><a class="brand" href="../../../"><b>B.</b>BRANDON FRANK HAN-CHWEEN HUANG</a><a class="back" href="./">← Medical AI lab</a></header>
+<main id="main">
+
+<section class="lab-hero">
+  <div>
+    <p class="kicker">RESEARCH LAB 07 / AUDIT</p>
+    <h1>The leak in<br><em>plain sight</em></h1>
+    <p class="intro">A public dataset of 299 heart-failure patients has been used in hundreds of papers. Most of the models built on it were quietly given the answer. Try the trick yourself, then see how often it was used.</p>
+    <div class="tags"><span>764 citing works screened</span><span>107 classifiers coded</span><span>Draft · pending review</span></div>
+  </div>
+  <div class="hero-signal" aria-hidden="true"><svg viewBox="0 0 280 230"><path d="M10 190H60L60 150 110 150 110 110 160 110 160 60 210 60 210 30 270 30"/><circle cx="270" cy="30" r="7"/><text x="15" y="220">74% → 96% WITHOUT LEARNING ANYTHING</text></svg></div>
+</section>
+
+<div class="scope-note"><b>Research, not a medical tool.</b> This page re-analyses a historic public dataset and the published studies that used it. Nothing here predicts anyone's health. The literature coding is AI-assisted and is still being checked by a person; study names are withheld until it is.</div>
+
+<section class="leak-section" aria-labelledby="s1">
+  <div class="experiment-heading"><div>
+    <p class="kicker">01 / ONE COLUMN</p>
+    <h2 id="s1">How long a patient was followed tells you whether they died.</h2>
+    <p>The dataset has a column called <code>time</code>: days of follow-up. For a patient who died, it is the day they died. For a survivor, it is how long the study watched them. Drag the cutoff and predict “died” for everyone followed less than that many days.</p>
+  </div></div>
+  <div class="workbench">
+    <div class="visual">
+      <svg id="strip" class="main-chart" viewBox="0 0 760 255" role="img" aria-label="Follow-up days for each of 299 patients, split by outcome"></svg>
+      <label class="control-label" for="cut">CUTOFF: PREDICT “DIED” IF FOLLOWED FEWER THAN <output id="cutval">70</output> DAYS</label>
+      <input id="cut" type="range" min="4" max="285" value="70" step="1">
+    </div>
+    <aside>
+      <h3>One number, no medicine.</h3>
+      <div class="mini-stat"><b id="ruleacc">–</b><span>accuracy of the one-line rule</span></div>
+      <div class="mini-stat"><b id="cleanacc" class="dim">–</b><span>a random forest on all 11 clinical measurements</span></div>
+      <p id="rulenote"></p>
+      <button id="bestcut" type="button">Find the best cutoff</button>
+    </aside>
+  </div>
+</section>
+
+<section class="leak-section" aria-labelledby="s2">
+  <div class="experiment-heading"><div>
+    <p class="kicker">02 / THE RECIPE</p>
+    <h2 id="s2">Cheat your way to a publishable number.</h2>
+    <p>Start from an honest random forest. Switch on the shortcuts we found in published papers and watch the score climb. Every number comes from models actually trained on this dataset.</p>
+  </div></div>
+  <div class="workbench">
+    <div class="visual">
+      <div class="options" role="group" aria-label="Shortcuts">
+        <button id="t-time" type="button" aria-pressed="false">+ Feed it follow-up time</button>
+        <button id="t-smote" type="button" aria-pressed="false">+ Make synthetic patients before splitting</button>
+      </div>
+      <div class="gauge"><span class="gauge-num" id="score">–</span><span class="gauge-label" id="scorelabel">honest average, 100 cross-validation runs</span></div>
+      <svg id="claims" class="main-chart" viewBox="0 0 760 170" role="img" aria-label="Your score against the accuracies published studies report"></svg>
+      <p class="plot-caption">Dots: accuracy (or F1) reported by 64 coded studies. Pink: the study fed follow-up time to its model. Green ring: it left time out. Grey: we could not tell. The bar is you.</p>
+    </div>
+    <aside>
+      <h3>Then pick your test set.</h3>
+      <p>Papers often report one random train/test split. Reroll until you like the number.</p>
+      <div class="toolbar"><button id="reroll" type="button" class="primary">Reroll the split</button><button id="reset" type="button">Reset</button></div>
+      <div class="mini-stat"><b id="rolls">0</b><span>splits tried</span></div>
+      <div class="mini-stat"><b id="best">–</b><span>best split so far (what gets reported)</span></div>
+      <p id="leaknote" class="leaknote"></p>
+    </aside>
+  </div>
+</section>
+
+<section class="leak-section" aria-labelledby="s3">
+  <div class="experiment-heading"><div>
+    <p class="kicker">03 / THE LITERATURE</p>
+    <h2 id="s3">Most studies used the shortcut, and kept using it after it was flagged.</h2>
+    <p>Each dot is one classification study on this dataset, by publication year. A 2023 paper called the column a surrogate for the outcome. The pattern did not change.</p>
+  </div></div>
+  <div class="workbench">
+    <div class="visual">
+      <div class="options" role="group" aria-label="Filter studies">
+        <button data-f="all" type="button" aria-pressed="true">All 107</button>
+        <button data-f="hi" type="button" aria-pressed="false">Reported 90% or more</button>
+        <button data-f="explicit" type="button" aria-pressed="false">Stated outright only</button>
+      </div>
+      <svg id="years" class="main-chart" viewBox="0 0 760 210" role="img" aria-label="Coded studies by year and use of follow-up time"></svg>
+      <div class="legend"><span class="pink">used follow-up time</span><span class="ring">left it out</span><span class="empty">could not tell</span></div>
+      <div class="case-readout" id="studyread" aria-live="polite">Hover or tab to a dot.</div>
+    </div>
+    <aside>
+      <h3 id="share">–</h3>
+      <p id="sharenote"></p>
+      <div class="mini-stat"><b id="late">–</b><span>of determinable studies from 2024–2026 used it</span></div>
+      <p>“Could not tell” mostly means the paper never lists its inputs. Paywalled papers we could not read are not shown.</p>
+    </aside>
+  </div>
+</section>
+
+<section class="takeaway">
+  <h3>What to take from this</h3>
+  <p>Without follow-up time, honest models on this dataset land around 74% accuracy (AUROC about 0.80). Claims of 95–100% are not better medicine; they are the shortcut, synthetic patients that leak across the split, and a lucky test set. If you use this dataset: drop <code>time</code>, or make it the outcome of a survival model, and oversample only inside training folds.</p>
+</section>
+
+<section class="open-methods">
+  <div><p class="kicker">METHODS &amp; DOWNLOADS</p><h2>Check the work</h2><p>We took all 764 works that cite the dataset's two source papers (OpenAlex, 15 November 2026), read the 241 we could get in full, and coded each classifier for how it used follow-up time. The experiments retrain random forests with and without each shortcut. Study-level codes will be published with names once a person has checked them.</p></div>
+  <div class="download-links"><a href="leakage-method.md">Audit method and code ↗</a><a href="leakage-data.json" download>Numbers behind this page ↓</a></div>
+</section>
+
+<section class="source-notes">
+  <h2>Limits.</h2>
+  <p>Full text was obtained for 241 of 764 citing works; 67 likely-relevant paywalled papers are not assessed. 24 of the “used time” codes are inferred from a paper using every column without saying it removed any. The coding was done with AI assistance in two passes and is being checked by a person; until then treat paper-level codes as provisional. Dataset: Ahmad et al. 2017 and Chicco &amp; Jurman 2020, CC BY 4.0.</p>
+  <p>Prepared for Brandon Frank Han-Chween Huang with AI-assisted analysis and writing. November 15, 2026. Not peer-reviewed.</p>
+</section>
+</main>
+<footer><span>Brandon Frank Han-Chween Huang</span><a href="./">Back to the medical AI lab ↗</a></footer>
+<script type="module" src="leakage.js"></script>
+</body>
+</html>

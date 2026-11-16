@@ -1,0 +1,22 @@
+.leak-section{margin:0 0 60px}
+.leak-section code,.takeaway code{font:0.92em ui-monospace,monospace;color:var(--lime)}
+.workbench input[type=range]{width:100%;accent-color:var(--lime);padding:0;border:0;background:none;margin:6px 0 4px}
+.mini-stat b.dim{color:var(--ink)}
+.gauge{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin:6px 0 10px}
+.gauge-num{font-size:clamp(56px,8vw,96px);letter-spacing:-3px;line-height:1;color:var(--lime);font-variant-numeric:tabular-nums;transition:color .3s}
+.gauge-num.leaky{color:var(--pink)}
+.gauge-label{font:10px/1.6 monospace;letter-spacing:1px;color:var(--muted);text-transform:uppercase;max-width:260px}
+#t-time[aria-pressed=true],#t-smote[aria-pressed=true]{background:var(--pink);border-color:var(--pink);color:#2a1219}
+.leaknote{min-height:60px}
+.leaknote b{color:var(--pink)}
+.legend .ring:before{background:transparent;border:2px solid var(--lime);box-sizing:border-box}
+.main-chart .dot{cursor:pointer;outline:none}
+.main-chart .dot:hover,.main-chart .dot:focus{stroke:#fff;stroke-width:2}
+.main-chart .faded{opacity:.12}
+.main-chart .warn{stroke:var(--pink);stroke-dasharray:4 4}
+.main-chart .you{fill:var(--lime);transition:x .4s}
+.main-chart .you.leaky{fill:var(--pink)}
+.main-chart text.strong{fill:var(--ink)}
+@media(max-width:850px){.workbench{grid-template-columns:1fr}.workbench aside{border-left:0;border-top:1px solid var(--line)}}
+@media(prefers-reduced-motion:reduce){.gauge-num,.main-chart .you{transition:none}}
+@media(max-width:600px){.leak-section .visual{overflow-x:auto}.leak-section .main-chart{min-width:600px}}
