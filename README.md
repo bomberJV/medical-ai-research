@@ -1,7 +1,6 @@
 # Medical AI, under pressure
 
-[Project priorities and agent handoff](https://github.com/bomberJV/brandon-studio/tree/priority-hub/priorities)
-
+[![Tests](https://github.com/bomberJV/medical-ai-research/actions/workflows/tests.yml/badge.svg)](https://github.com/bomberJV/medical-ai-research/actions/workflows/tests.yml) · [Open it on brandonfhuang.com](https://brandonfhuang.com/projects/play/medical/)
 
 Three actual, reproducible benchmark experiments prepared for Brandon Frank Han-Chween Huang with AI-assisted analysis and writing. Public data; no clinical service, patient-input interface, or new patient collection. Study date: November 13, 2026.
 
@@ -56,6 +55,12 @@ Run this from the top-level package. Node 22 or newer recommended. No JavaScript
 
 Small historical datasets; one fixed split; no external hospital, prospective, temporal, imaging, or clinical-utility validation. Bootstrap intervals describe test-row sampling conditional on the fit. Missingness bands describe artificial corruption only. Different dataset cohorts are not a combined meta-analysis. The models are not medical devices, and no patient-level recommendations are generated.
 
-## Licensing
+## License
 
-UCI WDBC and heart-failure datasets use CC BY 4.0; attribution is in PROVENANCE.md. The diabetes dataset is loaded from the pinned scikit-learn distribution; source links are supplied and its original raw table is not separately redistributed in this package. Derived held-out predictions are included for verification. Application code has no selected redistribution license; choose an appropriate license before publishing it as open source. The shared DejaVu symbols font retains its bundled license.
+Created by Brandon Frank Han-Chween Huang ([brandonfhuang.com](https://brandonfhuang.com)).
+
+- **Code** (scripts, styles, page markup, tests and tools): [Apache License 2.0](LICENSE). Keep the [NOTICE](NOTICE) file with any copy or derivative.
+- **Writing, figures, papers, results and narration recordings**: [CC BY 4.0](LICENSE-CC-BY-4.0.txt). Credit “Brandon Frank Han-Chween Huang” and link to https://brandonfhuang.com or this repository.
+- **Third-party files** keep their own licenses:
+  - The UCI datasets keep their CC BY 4.0 terms and the diabetes data its scikit-learn source; attribution is in [research/PROVENANCE.md](research/PROVENANCE.md).
+  - `site/shared/symbols.woff` is a DejaVu font subset under the Bitstream Vera license ([site/shared/FONT-LICENSE.txt](site/shared/FONT-LICENSE.txt)).
