@@ -29,6 +29,19 @@ python3 -m http.server 8000 --directory site
 
 Open http://localhost:8000/medical/. The view uses recorded results; it does not retrain models or send health data anywhere. You can explore confidence thresholds, conformal coverages, model comparisons, and paired missingness masks. The reports can be printed to PDF from a browser.
 
+## AI Reliability Observatory
+
+The calibration comparison is available at `site/medical/observatory.html` (with the server above, open http://localhost:8000/medical/observatory.html). Inspect any of the 114 held-out WDBC records, compare raw and sigmoid-calibrated probabilities, and download the experiment receipt. Accuracy, Brier score, AUROC and confusion counts are independently recomputed from frozen predictions. The complete cohort stays visible when inspecting the protocol's fixed abstention thresholds.
+
+This view reuses the recorded November 13 run. It does not train a new model, tune thresholds or establish clinical validation. The receipt includes dataset and split hashes, model configuration, metric definitions, uncertainty scope, original environment and explicit unknown historical metadata. Expanded interval and missingness Observatory views remain follow-on work; the existing notebook studies remain available.
+
+```sh
+python research/build_observatory.py --check
+npm test
+```
+
+The receipt exporter uses only the Python standard library. See [the versioned Observatory export contract](research/OBSERVATORY.md) for regeneration, verification tolerances and acceptance boundaries.
+
 ## Experiments
 
 1. **Confidence is not accuracy.** WDBC logistic classification, independent sigmoid calibration, predefined selective-prediction thresholds. Calibration worsened Brier score on this split despite improving classification by one case.

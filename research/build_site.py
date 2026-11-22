@@ -79,4 +79,6 @@ for slug,d in reports.items():
  md+='\n## Numerical results\n\n|'+'|'.join(d['headers'])+'|\n|'+'|'.join('---' for _ in d['headers'])+'|\n'+''.join('|'+'|'.join(row)+'|\n' for row in d['rows'])
  md+=f'\n## Figure\n\n![{d["caption"]}](figures/{d["figure"]}.svg)\n\n## References\n\n'+''.join(f'- [{refs[k][0]}]({refs[k][1]})\n' for k in d['references'])
  (SITE/(slug+'.md')).write_text(md);(ROOT/'output'/(slug+'.md')).write_text(md)
-print('Built three reports and copied recorded results/figures.')
+from build_observatory import export_receipt
+export_receipt()
+print('Built three reports, copied recorded results/figures, and verified the Observatory receipt.')
