@@ -1,0 +1,1214 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#122522">
+  <title>Calibration study | Medical AI lab</title>
+  <meta name="description" content="One malignant sample crossed the 50% cutoff after calibration. Explore why accuracy rose while probability error grew across all 114 held-out breast cancer benchmark records.">
+  <link rel="stylesheet" href="observatory.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to the investigation</a>
+  <header class="site-header">
+    <a class="wordmark" href="./"><b>B.</b><span>MEDICAL AI LAB</span></a>
+    <a href="./">All medical experiments <span aria-hidden="true">↗</span></a>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="title">
+      <div class="hero-top"><p class="eyebrow">CALIBRATION STUDY</p><span class="evidence-tag">13 November 2026</span></div>
+      <div class="hero-layout">
+        <div><h1 id="title">One more <em>correct label.</em></h1><p class="hero-copy">For one malignant sample, calibration raised the estimated probability of malignancy from 45.71% to 52.08%. That changed the model’s answer. Across all 114 test records, its probability estimates got worse overall.</p><a class="hero-link" href="#one-record">Inspect the prediction <span aria-hidden="true">↓</span></a></div>
+        <div class="finding-card"><span class="eyebrow">ALL 114 TEST RECORDS</span><div class="finding"><span>Correct labels <small>Before → after calibration</small></span><b>112 <i>→</i> 113</b></div><div class="finding"><span>Brier score <small>Average squared probability error</small></span><b>0.01209 <i>→</i> 0.02050</b></div></div>
+      </div>
+      <div class="hero-meta"><span>WISCONSIN DIAGNOSTIC BREAST CANCER</span><span>341 train / 114 calibration / 114 test</span><span>One fixed split · Seed 20261113</span></div>
+    </section>
+
+    <div class="scope"><b>Public benchmark.</b> The model uses 30 measurements of cell nuclei from the Wisconsin Diagnostic Breast Cancer dataset. The study evaluates predictions on those historical records.</div>
+    <nav class="section-nav" aria-label="Study sections"><a href="#one-record">01 Prediction</a><a href="#cohort">02 Cohort</a><a href="#comparison">03 Comparison</a><a href="#receipt">04 Receipt</a></nav>
+    <p id="load-status" class="load-status" role="status">Recorded reference snapshot. Interactive metric checks run when JavaScript and the frozen files are available.</p>
+
+    <section id="one-record" class="investigation" aria-labelledby="record-heading">
+      <div class="section-heading"><div><p class="eyebrow">01 / ONE HELD-OUT PREDICTION</p><h2 id="record-heading">The sample that crossed 50%.</h2></div><p>The dataset labels this sample malignant. The model assigns that label when its probability estimate reaches 50%. This was the only record to cross the cutoff.</p></div>
+      <div id="record-detail" class="record-detail" data-featured-row="215">
+        <div class="record-identity"><span class="eyebrow">SOURCE ROW</span><strong>215</strong><span>Recorded label <b>Malignant (1)</b></span><small>Test record 81 of 114 · source rows start at zero</small></div>
+        <div class="prediction raw"><span class="model-label">RAW LOGISTIC</span><strong>45.71<span>%</span></strong><p>Estimated probability of malignancy</p><div class="outcome incorrect">× Benign · incorrect</div><small>Squared error 0.294725</small></div>
+        <div class="prediction calibrated"><span class="model-label">SIGMOID CALIBRATED</span><strong>52.08<span>%</span></strong><p>Estimated probability of malignancy</p><div class="outcome">✓ Malignant · correct</div><small>Squared error 0.229624</small></div>
+      </div>
+      <p class="footnote">Calibration uses a separate set of 114 labeled examples to adjust the model’s probabilities. The 114 test samples shown here were held out of both training and calibration.</p>
+    </section>
+
+    <section id="cohort" class="investigation" aria-labelledby="cohort-heading">
+      <div class="section-heading"><div><p class="eyebrow">02 / TEST COHORT</p><h2 id="cohort-heading">All 114 predictions.</h2></div><p>The test set contains 42 malignant samples and 72 benign samples. Each tile shows how the two predictions compare with the recorded label.</p></div>
+      <div class="cohort-panel">
+        <div class="cohort-key"><span>Each tile shows the raw prediction on the left and the calibrated prediction on the right.</span><span>✓ Correct <b class="error-key">× Incorrect</b></span></div>
+        <p id="cohort-help" class="cohort-help">Tap a numbered tile to see both probabilities. <a href="#record-081">Jump to 081</a>. <span id="keyboard-help" hidden>Use the arrow keys to browse.</span></p>
+        <div id="cohort-grid" class="cohort-grid" aria-label="All held-out records" aria-describedby="cohort-help">
+<details class="native-record" id="record-001" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 001, source row 147">
+      <span class="tile-number">001</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 001 · Source row 147<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.81%</strong><span>Benign · correct</span></p><p><strong>Calibrated 6.37%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-002" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 002, source row 402">
+      <span class="tile-number">002</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 002 · Source row 402<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.16%</strong><span>Benign · correct</span></p><p><strong>Calibrated 2.54%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-003" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 003, source row 148">
+      <span class="tile-number">003</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 003 · Source row 148<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 14.17%</strong><span>Benign · correct</span></p><p><strong>Calibrated 29.07%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-004" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 004, source row 382">
+      <span class="tile-number">004</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 004 · Source row 382<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.05%</strong><span>Benign · correct</span></p><p><strong>Calibrated 1.32%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-005" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 005, source row 125">
+      <span class="tile-number">005</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 005 · Source row 125<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.22%</strong><span>Benign · correct</span></p><p><strong>Calibrated 2.96%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-006" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 006, source row 218">
+      <span class="tile-number">006</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 006 · Source row 218<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.98%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-007" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 007, source row 94">
+      <span class="tile-number">007</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 007 · Source row 94<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 99.44%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 96.39%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-008" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 008, source row 466">
+      <span class="tile-number">008</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 008 · Source row 466<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 18.95%</strong><span>Benign · correct</span></p><p><strong>Calibrated 33.54%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-009" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 009, source row 329">
+      <span class="tile-number">009</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 009 · Source row 329<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 79.17%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 72.82%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-010" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 010, source row 465">
+      <span class="tile-number">010</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 010 · Source row 465<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 7.15%</strong><span>Benign · correct</span></p><p><strong>Calibrated 20.60%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-011" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 011, source row 447">
+      <span class="tile-number">011</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 011 · Source row 447<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 5.89%</strong><span>Benign · correct</span></p><p><strong>Calibrated 18.65%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-012" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 012, source row 522">
+      <span class="tile-number">012</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 012 · Source row 522<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.02%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.68%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-013" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 013, source row 253">
+      <span class="tile-number">013</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 013 · Source row 253<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 99.26%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 95.77%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-014" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 014, source row 152">
+      <span class="tile-number">014</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 014 · Source row 152<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 4.66%</strong><span>Benign · correct</span></p><p><strong>Calibrated 16.50%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-015" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 015, source row 41">
+      <span class="tile-number">015</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 015 · Source row 41<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 65.47%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 63.86%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-016" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 016, source row 273">
+      <span class="tile-number">016</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 016 · Source row 273<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.59%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-017" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 017, source row 553">
+      <span class="tile-number">017</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 017 · Source row 553<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.36%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-018" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 018, source row 506">
+      <span class="tile-number">018</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 018 · Source row 506<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.52%</strong><span>Benign · correct</span></p><p><strong>Calibrated 4.90%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-019" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 019, source row 357">
+      <span class="tile-number">019</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 019 · Source row 357<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.27%</strong><span>Benign · correct</span></p><p><strong>Calibrated 3.39%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-020" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 020, source row 138">
+      <span class="tile-number">020</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 020 · Source row 138<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 99.98%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.56%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-021" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 021, source row 254">
+      <span class="tile-number">021</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 021 · Source row 254<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.92%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-022" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 022, source row 236">
+      <span class="tile-number">022</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 022 · Source row 236<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 100.00%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-023" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 023, source row 557">
+      <span class="tile-number">023</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 023 · Source row 557<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.05%</strong><span>Benign · correct</span></p><p><strong>Calibrated 1.25%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-024" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 024, source row 179">
+      <span class="tile-number">024</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 024 · Source row 179<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.39%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-025" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 025, source row 388">
+      <span class="tile-number">025</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 025 · Source row 388<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.00%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.23%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-026" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 026, source row 423">
+      <span class="tile-number">026</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 026 · Source row 423<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 9.52%</strong><span>Benign · correct</span></p><p><strong>Calibrated 23.83%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-027" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 027, source row 38">
+      <span class="tile-number">027</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 027 · Source row 38<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 80.53%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 73.81%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-028" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 028, source row 64">
+      <span class="tile-number">028</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 028 · Source row 64<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 99.30%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 95.90%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-029" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 029, source row 551">
+      <span class="tile-number">029</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 029 · Source row 551<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.15%</strong><span>Benign · correct</span></p><p><strong>Calibrated 2.41%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-030" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 030, source row 381">
+      <span class="tile-number">030</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 030 · Source row 381<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.03%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.97%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-031" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 031, source row 395">
+      <span class="tile-number">031</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 031 · Source row 395<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.37%</strong><span>Benign · correct</span></p><p><strong>Calibrated 4.05%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-032" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 032, source row 133">
+      <span class="tile-number">032</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 032 · Source row 133<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 15.22%</strong><span>Benign · correct</span></p><p><strong>Calibrated 30.12%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-033" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 033, source row 358">
+      <span class="tile-number">033</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 033 · Source row 358<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.43%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-034" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 034, source row 56">
+      <span class="tile-number">034</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 034 · Source row 56<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.98%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-035" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 035, source row 8">
+      <span class="tile-number">035</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 035 · Source row 8<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 99.08%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 95.21%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-036" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 036, source row 501">
+      <span class="tile-number">036</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 036 · Source row 501<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 94.76%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 87.21%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-037" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 037, source row 24">
+      <span class="tile-number">037</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 037 · Source row 24<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.99%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-038" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 038, source row 493">
+      <span class="tile-number">038</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 038 · Source row 493<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.00%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.18%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-039" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 039, source row 547">
+      <span class="tile-number">039</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 039 · Source row 547<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.44%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-040" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 040, source row 546">
+      <span class="tile-number">040</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 040 · Source row 546<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.43%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-041" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 041, source row 531">
+      <span class="tile-number">041</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 041 · Source row 531<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 2.41%</strong><span>Benign · correct</span></p><p><strong>Calibrated 11.61%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-042" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 042, source row 346">
+      <span class="tile-number">042</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 042 · Source row 346<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.18%</strong><span>Benign · correct</span></p><p><strong>Calibrated 2.68%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-043" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 043, source row 176">
+      <span class="tile-number">043</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 043 · Source row 176<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.00%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.20%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-044" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 044, source row 261">
+      <span class="tile-number">044</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 044 · Source row 261<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 83.96%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 76.44%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-045" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 045, source row 88">
+      <span class="tile-number">045</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 045 · Source row 88<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 7.97%</strong><span>Benign · correct</span></p><p><strong>Calibrated 21.78%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-046" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 046, source row 288">
+      <span class="tile-number">046</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 046 · Source row 288<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.10%</strong><span>Benign · correct</span></p><p><strong>Calibrated 1.87%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-047" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 047, source row 229">
+      <span class="tile-number">047</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 047 · Source row 229<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 95.84%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 88.74%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-048" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 048, source row 327">
+      <span class="tile-number">048</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 048 · Source row 327<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.57%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-049" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 049, source row 198">
+      <span class="tile-number">049</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 049 · Source row 198<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 99.97%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.30%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-050" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 050, source row 165">
+      <span class="tile-number">050</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 050 · Source row 165<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.94%</strong><span>Benign · correct</span></p><p><strong>Calibrated 6.91%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-051" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 051, source row 243">
+      <span class="tile-number">051</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 051 · Source row 243<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 2.88%</strong><span>Benign · correct</span></p><p><strong>Calibrated 12.79%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-052" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 052, source row 156">
+      <span class="tile-number">052</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 052 · Source row 156<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 99.85%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 98.32%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-053" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 053, source row 21">
+      <span class="tile-number">053</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 053 · Source row 21<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.00%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.27%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-054" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 054, source row 507">
+      <span class="tile-number">054</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 054 · Source row 507<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.02%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.76%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-055" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 055, source row 169">
+      <span class="tile-number">055</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 055 · Source row 169<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 1.22%</strong><span>Benign · correct</span></p><p><strong>Calibrated 7.99%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-056" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 056, source row 433">
+      <span class="tile-number">056</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 056 · Source row 433<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 99.99%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.76%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-057" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 057, source row 30">
+      <span class="tile-number">057</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 057 · Source row 30<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.99%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-058" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 058, source row 102">
+      <span class="tile-number">058</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 058 · Source row 102<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 1.39%</strong><span>Benign · correct</span></p><p><strong>Calibrated 8.58%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-059" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 059, source row 373">
+      <span class="tile-number">059</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 059 · Source row 373<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.92%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-060" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 060, source row 82">
+      <span class="tile-number">060</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 060 · Source row 82<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 100.00%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-061" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 061, source row 434">
+      <span class="tile-number">061</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 061 · Source row 434<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 1.03%</strong><span>Benign · correct</span></p><p><strong>Calibrated 7.28%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-062" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 062, source row 540">
+      <span class="tile-number">062</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 062 · Source row 540<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.36%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-063" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 063, source row 379">
+      <span class="tile-number">063</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 063 · Source row 379<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 97.43%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 91.39%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-064" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 064, source row 31">
+      <span class="tile-number">064</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 064 · Source row 31<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 98.73%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 94.22%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-065" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 065, source row 384">
+      <span class="tile-number">065</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 065 · Source row 384<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.21%</strong><span>Benign · correct</span></p><p><strong>Calibrated 2.89%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-066" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 066, source row 43">
+      <span class="tile-number">066</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 066 · Source row 43<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 90.76%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 82.54%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-067" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 067, source row 330">
+      <span class="tile-number">067</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 067 · Source row 330<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 93.90%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 86.09%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-068" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 068, source row 127">
+      <span class="tile-number">068</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 068 · Source row 127<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 99.84%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 98.24%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-069" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 069, source row 185">
+      <span class="tile-number">069</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 069 · Source row 185<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.02%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.62%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-070" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 070, source row 189">
+      <span class="tile-number">070</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 070 · Source row 189<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.03%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.90%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-071" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 071, source row 118">
+      <span class="tile-number">071</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 071 · Source row 118<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 99.99%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.72%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-072" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 072, source row 275">
+      <span class="tile-number">072</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 072 · Source row 275<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 1.57%</strong><span>Benign · correct</span></p><p><strong>Calibrated 9.18%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-073" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 073, source row 291">
+      <span class="tile-number">073</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 073 · Source row 291<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 32.60%</strong><span>Benign · correct</span></p><p><strong>Calibrated 43.82%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-074" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 074, source row 25">
+      <span class="tile-number">074</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 074 · Source row 25<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.96%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-075" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 075, source row 190">
+      <span class="tile-number">075</span><span class="tile-outcomes" aria-hidden="true"><span class="incorrect">×</span><span class="incorrect">×</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 075 · Source row 190<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 41.47%</strong><span>Benign · incorrect</span></p><p><strong>Calibrated 49.50%</strong><span>Benign · incorrect</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-076" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 076, source row 166">
+      <span class="tile-number">076</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 076 · Source row 166<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.00%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.15%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-077" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 077, source row 374">
+      <span class="tile-number">077</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 077 · Source row 374<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.32%</strong><span>Benign · correct</span></p><p><strong>Calibrated 3.71%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-078" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 078, source row 390">
+      <span class="tile-number">078</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 078 · Source row 390<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.35%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-079" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 079, source row 159">
+      <span class="tile-number">079</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 079 · Source row 159<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.48%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-080" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 080, source row 519">
+      <span class="tile-number">080</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 080 · Source row 519<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 1.07%</strong><span>Benign · correct</span></p><p><strong>Calibrated 7.43%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-081" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 081, source row 215">
+      <span class="tile-number">081</span><span class="tile-outcomes" aria-hidden="true"><span class="incorrect">×</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 081 · Source row 215<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 45.71%</strong><span>Benign · incorrect</span></p><p><strong>Calibrated 52.08%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-082" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 082, source row 427">
+      <span class="tile-number">082</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 082 · Source row 427<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 2.32%</strong><span>Benign · correct</span></p><p><strong>Calibrated 11.37%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-083" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 083, source row 139">
+      <span class="tile-number">083</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 083 · Source row 139<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.46%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-084" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 084, source row 484">
+      <span class="tile-number">084</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 084 · Source row 484<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 8.04%</strong><span>Benign · correct</span></p><p><strong>Calibrated 21.87%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-085" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 085, source row 323">
+      <span class="tile-number">085</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 085 · Source row 323<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 100.00%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-086" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 086, source row 370">
+      <span class="tile-number">086</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 086 · Source row 370<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.79%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-087" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 087, source row 309">
+      <span class="tile-number">087</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 087 · Source row 309<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.04%</strong><span>Benign · correct</span></p><p><strong>Calibrated 1.12%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-088" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 088, source row 167">
+      <span class="tile-number">088</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 088 · Source row 167<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 98.32%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 93.23%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-089" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 089, source row 545">
+      <span class="tile-number">089</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 089 · Source row 545<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 3.76%</strong><span>Benign · correct</span></p><p><strong>Calibrated 14.74%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-090" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 090, source row 136">
+      <span class="tile-number">090</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 090 · Source row 136<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.21%</strong><span>Benign · correct</span></p><p><strong>Calibrated 2.93%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-091" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 091, source row 541">
+      <span class="tile-number">091</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 091 · Source row 541<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 42.05%</strong><span>Benign · correct</span></p><p><strong>Calibrated 49.85%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-092" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 092, source row 60">
+      <span class="tile-number">092</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 092 · Source row 60<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.47%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-093" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 093, source row 495">
+      <span class="tile-number">093</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 093 · Source row 495<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 10.54%</strong><span>Benign · correct</span></p><p><strong>Calibrated 25.08%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-094" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 094, source row 552">
+      <span class="tile-number">094</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 094 · Source row 552<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 6.75%</strong><span>Benign · correct</span></p><p><strong>Calibrated 20.01%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-095" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 095, source row 259">
+      <span class="tile-number">095</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 095 · Source row 259<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.90%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-096" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 096, source row 442">
+      <span class="tile-number">096</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 096 · Source row 442<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.03%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.93%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-097" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 097, source row 356">
+      <span class="tile-number">097</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 097 · Source row 356<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 2.90%</strong><span>Benign · correct</span></p><p><strong>Calibrated 12.84%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-098" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 098, source row 317">
+      <span class="tile-number">098</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 098 · Source row 317<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 99.83%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 98.23%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-099" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 099, source row 424">
+      <span class="tile-number">099</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 099 · Source row 424<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.23%</strong><span>Benign · correct</span></p><p><strong>Calibrated 3.10%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-100" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 100, source row 249">
+      <span class="tile-number">100</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 100 · Source row 249<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.24%</strong><span>Benign · correct</span></p><p><strong>Calibrated 3.14%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-101" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 101, source row 543">
+      <span class="tile-number">101</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 101 · Source row 543<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 10.22%</strong><span>Benign · correct</span></p><p><strong>Calibrated 24.70%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-102" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 102, source row 483">
+      <span class="tile-number">102</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 102 · Source row 483<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 1.74%</strong><span>Benign · correct</span></p><p><strong>Calibrated 9.71%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-103" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 103, source row 183">
+      <span class="tile-number">103</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 103 · Source row 183<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.01%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.35%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-104" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 104, source row 172">
+      <span class="tile-number">104</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 104 · Source row 172<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 97.92%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 92.36%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-105" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 105, source row 366">
+      <span class="tile-number">105</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 105 · Source row 366<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.99%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-106" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 106, source row 566">
+      <span class="tile-number">106</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 106 · Source row 566<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 98.15%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 92.85%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-107" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 107, source row 499">
+      <span class="tile-number">107</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 107 · Source row 499<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 99.94%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-108" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 108, source row 97">
+      <span class="tile-number">108</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 108 · Source row 97<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.00%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.23%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-109" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 109, source row 393">
+      <span class="tile-number">109</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 109 · Source row 393<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 100.00%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 100.00%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-110" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 110, source row 536">
+      <span class="tile-number">110</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 110 · Source row 536<br>Recorded label <b>Malignant</b></header>
+      <p><strong>Raw 73.66%</strong><span>Malignant · correct</span></p><p><strong>Calibrated 69.04%</strong><span>Malignant · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-111" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 111, source row 420">
+      <span class="tile-number">111</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 111 · Source row 420<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.83%</strong><span>Benign · correct</span></p><p><strong>Calibrated 6.45%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-112" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 112, source row 173">
+      <span class="tile-number">112</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 112 · Source row 173<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 0.00%</strong><span>Benign · correct</span></p><p><strong>Calibrated 0.09%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-113" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 113, source row 454">
+      <span class="tile-number">113</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 113 · Source row 454<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 1.35%</strong><span>Benign · correct</span></p><p><strong>Calibrated 8.45%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+<details class="native-record" id="record-114" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record 114, source row 298">
+      <span class="tile-number">114</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record 114 · Source row 298<br>Recorded label <b>Benign</b></header>
+      <p><strong>Raw 1.44%</strong><span>Benign · correct</span></p><p><strong>Calibrated 8.75%</strong><span>Benign · correct</span></p>
+    </section>
+  </details>
+</div>
+        <p id="selection-status" class="sr-only" role="status"></p>
+        <div class="cohort-footer"><span id="cohort-count">114 records in original test order</span></div>
+      </div>
+      <details class="table-disclosure"><summary>Read all 114 predictions as a table</summary><p id="table-note" class="footnote">Source rows start at zero. Each probability is the model’s estimate for malignant (1). An estimate of 0.5 or higher gives a malignant prediction.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Full prediction table, scroll horizontally on small screens"><table aria-describedby="table-note"><caption>All held-out WDBC predictions · 114 records</caption><thead><tr><th scope="col">Source row</th><th scope="col">Recorded label</th><th scope="col">Raw probability</th><th scope="col">Raw outcome</th><th scope="col">Calibrated probability</th><th scope="col">Calibrated outcome</th></tr></thead><tbody id="record-table">
+<tr data-row="147"><th scope="row">147</th><td>Benign (0)</td><td>0.00814896</td><td>Benign · correct</td><td>0.06366619</td><td>Benign · correct</td></tr>
+<tr data-row="402"><th scope="row">402</th><td>Benign (0)</td><td>0.00164988</td><td>Benign · correct</td><td>0.02537237</td><td>Benign · correct</td></tr>
+<tr data-row="148"><th scope="row">148</th><td>Benign (0)</td><td>0.14171884</td><td>Benign · correct</td><td>0.29069814</td><td>Benign · correct</td></tr>
+<tr data-row="382"><th scope="row">382</th><td>Benign (0)</td><td>0.00054012</td><td>Benign · correct</td><td>0.01315704</td><td>Benign · correct</td></tr>
+<tr data-row="125"><th scope="row">125</th><td>Benign (0)</td><td>0.00215330</td><td>Benign · correct</td><td>0.02963632</td><td>Benign · correct</td></tr>
+<tr data-row="218"><th scope="row">218</th><td>Malignant (1)</td><td>0.99999869</td><td>Malignant · correct</td><td>0.99975069</td><td>Malignant · correct</td></tr>
+<tr data-row="94"><th scope="row">94</th><td>Malignant (1)</td><td>0.99437664</td><td>Malignant · correct</td><td>0.96388927</td><td>Malignant · correct</td></tr>
+<tr data-row="466"><th scope="row">466</th><td>Benign (0)</td><td>0.18952906</td><td>Benign · correct</td><td>0.33544588</td><td>Benign · correct</td></tr>
+<tr data-row="329"><th scope="row">329</th><td>Malignant (1)</td><td>0.79174052</td><td>Malignant · correct</td><td>0.72823926</td><td>Malignant · correct</td></tr>
+<tr data-row="465"><th scope="row">465</th><td>Benign (0)</td><td>0.07145439</td><td>Benign · correct</td><td>0.20602521</td><td>Benign · correct</td></tr>
+<tr data-row="447"><th scope="row">447</th><td>Benign (0)</td><td>0.05890698</td><td>Benign · correct</td><td>0.18653428</td><td>Benign · correct</td></tr>
+<tr data-row="522"><th scope="row">522</th><td>Benign (0)</td><td>0.00017563</td><td>Benign · correct</td><td>0.00675758</td><td>Benign · correct</td></tr>
+<tr data-row="253"><th scope="row">253</th><td>Malignant (1)</td><td>0.99261466</td><td>Malignant · correct</td><td>0.95771635</td><td>Malignant · correct</td></tr>
+<tr data-row="152"><th scope="row">152</th><td>Benign (0)</td><td>0.04656301</td><td>Benign · correct</td><td>0.16503039</td><td>Benign · correct</td></tr>
+<tr data-row="41"><th scope="row">41</th><td>Malignant (1)</td><td>0.65474774</td><td>Malignant · correct</td><td>0.63861510</td><td>Malignant · correct</td></tr>
+<tr data-row="273"><th scope="row">273</th><td>Benign (0)</td><td>0.00013931</td><td>Benign · correct</td><td>0.00588733</td><td>Benign · correct</td></tr>
+<tr data-row="553"><th scope="row">553</th><td>Benign (0)</td><td>0.00006142</td><td>Benign · correct</td><td>0.00361374</td><td>Benign · correct</td></tr>
+<tr data-row="506"><th scope="row">506</th><td>Benign (0)</td><td>0.00515052</td><td>Benign · correct</td><td>0.04904241</td><td>Benign · correct</td></tr>
+<tr data-row="357"><th scope="row">357</th><td>Benign (0)</td><td>0.00271729</td><td>Benign · correct</td><td>0.03392582</td><td>Benign · correct</td></tr>
+<tr data-row="138"><th scope="row">138</th><td>Malignant (1)</td><td>0.99984082</td><td>Malignant · correct</td><td>0.99559967</td><td>Malignant · correct</td></tr>
+<tr data-row="254"><th scope="row">254</th><td>Malignant (1)</td><td>0.99999028</td><td>Malignant · correct</td><td>0.99917165</td><td>Malignant · correct</td></tr>
+<tr data-row="236"><th scope="row">236</th><td>Malignant (1)</td><td>1.00000000</td><td>Malignant · correct</td><td>0.99999960</td><td>Malignant · correct</td></tr>
+<tr data-row="557"><th scope="row">557</th><td>Benign (0)</td><td>0.00049473</td><td>Benign · correct</td><td>0.01249157</td><td>Benign · correct</td></tr>
+<tr data-row="179"><th scope="row">179</th><td>Benign (0)</td><td>0.00006951</td><td>Benign · correct</td><td>0.00389052</td><td>Benign · correct</td></tr>
+<tr data-row="388"><th scope="row">388</th><td>Benign (0)</td><td>0.00002893</td><td>Benign · correct</td><td>0.00230590</td><td>Benign · correct</td></tr>
+<tr data-row="423"><th scope="row">423</th><td>Benign (0)</td><td>0.09516013</td><td>Benign · correct</td><td>0.23829403</td><td>Benign · correct</td></tr>
+<tr data-row="38"><th scope="row">38</th><td>Malignant (1)</td><td>0.80527089</td><td>Malignant · correct</td><td>0.73809036</td><td>Malignant · correct</td></tr>
+<tr data-row="64"><th scope="row">64</th><td>Malignant (1)</td><td>0.99298654</td><td>Malignant · correct</td><td>0.95896011</td><td>Malignant · correct</td></tr>
+<tr data-row="551"><th scope="row">551</th><td>Benign (0)</td><td>0.00150829</td><td>Benign · correct</td><td>0.02407543</td><td>Benign · correct</td></tr>
+<tr data-row="381"><th scope="row">381</th><td>Benign (0)</td><td>0.00032448</td><td>Benign · correct</td><td>0.00973021</td><td>Benign · correct</td></tr>
+<tr data-row="395"><th scope="row">395</th><td>Benign (0)</td><td>0.00369553</td><td>Benign · correct</td><td>0.04052773</td><td>Benign · correct</td></tr>
+<tr data-row="133"><th scope="row">133</th><td>Benign (0)</td><td>0.15222246</td><td>Benign · correct</td><td>0.30115126</td><td>Benign · correct</td></tr>
+<tr data-row="358"><th scope="row">358</th><td>Benign (0)</td><td>0.00008153</td><td>Benign · correct</td><td>0.00427890</td><td>Benign · correct</td></tr>
+<tr data-row="56"><th scope="row">56</th><td>Malignant (1)</td><td>0.99999886</td><td>Malignant · correct</td><td>0.99977087</td><td>Malignant · correct</td></tr>
+<tr data-row="8"><th scope="row">8</th><td>Malignant (1)</td><td>0.99082002</td><td>Malignant · correct</td><td>0.95206756</td><td>Malignant · correct</td></tr>
+<tr data-row="501"><th scope="row">501</th><td>Malignant (1)</td><td>0.94760489</td><td>Malignant · correct</td><td>0.87207324</td><td>Malignant · correct</td></tr>
+<tr data-row="24"><th scope="row">24</th><td>Malignant (1)</td><td>0.99999987</td><td>Malignant · correct</td><td>0.99993611</td><td>Malignant · correct</td></tr>
+<tr data-row="493"><th scope="row">493</th><td>Benign (0)</td><td>0.00001995</td><td>Benign · correct</td><td>0.00184651</td><td>Benign · correct</td></tr>
+<tr data-row="547"><th scope="row">547</th><td>Benign (0)</td><td>0.00008588</td><td>Benign · correct</td><td>0.00441367</td><td>Benign · correct</td></tr>
+<tr data-row="546"><th scope="row">546</th><td>Benign (0)</td><td>0.00008070</td><td>Benign · correct</td><td>0.00425287</td><td>Benign · correct</td></tr>
+<tr data-row="531"><th scope="row">531</th><td>Benign (0)</td><td>0.02409275</td><td>Benign · correct</td><td>0.11612359</td><td>Benign · correct</td></tr>
+<tr data-row="346"><th scope="row">346</th><td>Benign (0)</td><td>0.00181007</td><td>Benign · correct</td><td>0.02678341</td><td>Benign · correct</td></tr>
+<tr data-row="176"><th scope="row">176</th><td>Benign (0)</td><td>0.00002323</td><td>Benign · correct</td><td>0.00202237</td><td>Benign · correct</td></tr>
+<tr data-row="261"><th scope="row">261</th><td>Malignant (1)</td><td>0.83956290</td><td>Malignant · correct</td><td>0.76440729</td><td>Malignant · correct</td></tr>
+<tr data-row="88"><th scope="row">88</th><td>Benign (0)</td><td>0.07966171</td><td>Benign · correct</td><td>0.21778069</td><td>Benign · correct</td></tr>
+<tr data-row="288"><th scope="row">288</th><td>Benign (0)</td><td>0.00097789</td><td>Benign · correct</td><td>0.01867117</td><td>Benign · correct</td></tr>
+<tr data-row="229"><th scope="row">229</th><td>Malignant (1)</td><td>0.95839065</td><td>Malignant · correct</td><td>0.88737201</td><td>Malignant · correct</td></tr>
+<tr data-row="327"><th scope="row">327</th><td>Benign (0)</td><td>0.00013149</td><td>Benign · correct</td><td>0.00568832</td><td>Benign · correct</td></tr>
+<tr data-row="198"><th scope="row">198</th><td>Malignant (1)</td><td>0.99965332</td><td>Malignant · correct</td><td>0.99300531</td><td>Malignant · correct</td></tr>
+<tr data-row="165"><th scope="row">165</th><td>Benign (0)</td><td>0.00942437</td><td>Benign · correct</td><td>0.06910635</td><td>Benign · correct</td></tr>
+<tr data-row="243"><th scope="row">243</th><td>Benign (0)</td><td>0.02880856</td><td>Benign · correct</td><td>0.12788993</td><td>Benign · correct</td></tr>
+<tr data-row="156"><th scope="row">156</th><td>Malignant (1)</td><td>0.99847586</td><td>Malignant · correct</td><td>0.98318280</td><td>Malignant · correct</td></tr>
+<tr data-row="21"><th scope="row">21</th><td>Benign (0)</td><td>0.00003810</td><td>Benign · correct</td><td>0.00271754</td><td>Benign · correct</td></tr>
+<tr data-row="507"><th scope="row">507</th><td>Benign (0)</td><td>0.00021523</td><td>Benign · correct</td><td>0.00762576</td><td>Benign · correct</td></tr>
+<tr data-row="169"><th scope="row">169</th><td>Benign (0)</td><td>0.01221082</td><td>Benign · correct</td><td>0.07989709</td><td>Benign · correct</td></tr>
+<tr data-row="433"><th scope="row">433</th><td>Malignant (1)</td><td>0.99994387</td><td>Malignant · correct</td><td>0.99763766</td><td>Malignant · correct</td></tr>
+<tr data-row="30"><th scope="row">30</th><td>Malignant (1)</td><td>0.99999961</td><td>Malignant · correct</td><td>0.99987959</td><td>Malignant · correct</td></tr>
+<tr data-row="102"><th scope="row">102</th><td>Benign (0)</td><td>0.01387879</td><td>Benign · correct</td><td>0.08579586</td><td>Benign · correct</td></tr>
+<tr data-row="373"><th scope="row">373</th><td>Malignant (1)</td><td>0.99999011</td><td>Malignant · correct</td><td>0.99916299</td><td>Malignant · correct</td></tr>
+<tr data-row="82"><th scope="row">82</th><td>Malignant (1)</td><td>1.00000000</td><td>Malignant · correct</td><td>0.99999853</td><td>Malignant · correct</td></tr>
+<tr data-row="434"><th scope="row">434</th><td>Benign (0)</td><td>0.01033057</td><td>Benign · correct</td><td>0.07276387</td><td>Benign · correct</td></tr>
+<tr data-row="540"><th scope="row">540</th><td>Benign (0)</td><td>0.00006231</td><td>Benign · correct</td><td>0.00364505</td><td>Benign · correct</td></tr>
+<tr data-row="379"><th scope="row">379</th><td>Malignant (1)</td><td>0.97427701</td><td>Malignant · correct</td><td>0.91387807</td><td>Malignant · correct</td></tr>
+<tr data-row="31"><th scope="row">31</th><td>Malignant (1)</td><td>0.98728844</td><td>Malignant · correct</td><td>0.94223388</td><td>Malignant · correct</td></tr>
+<tr data-row="384"><th scope="row">384</th><td>Benign (0)</td><td>0.00206814</td><td>Benign · correct</td><td>0.02894800</td><td>Benign · correct</td></tr>
+<tr data-row="43"><th scope="row">43</th><td>Malignant (1)</td><td>0.90755037</td><td>Malignant · correct</td><td>0.82543504</td><td>Malignant · correct</td></tr>
+<tr data-row="330"><th scope="row">330</th><td>Malignant (1)</td><td>0.93897753</td><td>Malignant · correct</td><td>0.86088832</td><td>Malignant · correct</td></tr>
+<tr data-row="127"><th scope="row">127</th><td>Malignant (1)</td><td>0.99835439</td><td>Malignant · correct</td><td>0.98240544</td><td>Malignant · correct</td></tr>
+<tr data-row="185"><th scope="row">185</th><td>Benign (0)</td><td>0.00015056</td><td>Benign · correct</td><td>0.00616592</td><td>Benign · correct</td></tr>
+<tr data-row="189"><th scope="row">189</th><td>Benign (0)</td><td>0.00028358</td><td>Benign · correct</td><td>0.00898283</td><td>Benign · correct</td></tr>
+<tr data-row="118"><th scope="row">118</th><td>Malignant (1)</td><td>0.99992590</td><td>Malignant · correct</td><td>0.99721139</td><td>Malignant · correct</td></tr>
+<tr data-row="275"><th scope="row">275</th><td>Benign (0)</td><td>0.01567477</td><td>Benign · correct</td><td>0.09177595</td><td>Benign · correct</td></tr>
+<tr data-row="291"><th scope="row">291</th><td>Benign (0)</td><td>0.32597504</td><td>Benign · correct</td><td>0.43815415</td><td>Benign · correct</td></tr>
+<tr data-row="25"><th scope="row">25</th><td>Malignant (1)</td><td>0.99999682</td><td>Malignant · correct</td><td>0.99957541</td><td>Malignant · correct</td></tr>
+<tr data-row="190"><th scope="row">190</th><td>Malignant (1)</td><td>0.41470099</td><td class="incorrect">Benign · incorrect</td><td>0.49498979</td><td class="incorrect">Benign · incorrect</td></tr>
+<tr data-row="166"><th scope="row">166</th><td>Benign (0)</td><td>0.00001400</td><td>Benign · correct</td><td>0.00149409</td><td>Benign · correct</td></tr>
+<tr data-row="374"><th scope="row">374</th><td>Benign (0)</td><td>0.00316616</td><td>Benign · correct</td><td>0.03706654</td><td>Benign · correct</td></tr>
+<tr data-row="390"><th scope="row">390</th><td>Benign (0)</td><td>0.00005684</td><td>Benign · correct</td><td>0.00345063</td><td>Benign · correct</td></tr>
+<tr data-row="159"><th scope="row">159</th><td>Benign (0)</td><td>0.00009754</td><td>Benign · correct</td><td>0.00476149</td><td>Benign · correct</td></tr>
+<tr data-row="519"><th scope="row">519</th><td>Benign (0)</td><td>0.01073483</td><td>Benign · correct</td><td>0.07434644</td><td>Benign · correct</td></tr>
+<tr data-row="215"><th scope="row">215</th><td>Malignant (1)</td><td>0.45711416</td><td class="incorrect">Benign · incorrect</td><td>0.52080944</td><td>Malignant · correct</td></tr>
+<tr data-row="427"><th scope="row">427</th><td>Benign (0)</td><td>0.02318665</td><td>Benign · correct</td><td>0.11373280</td><td>Benign · correct</td></tr>
+<tr data-row="139"><th scope="row">139</th><td>Benign (0)</td><td>0.00009186</td><td>Benign · correct</td><td>0.00459411</td><td>Benign · correct</td></tr>
+<tr data-row="484"><th scope="row">484</th><td>Benign (0)</td><td>0.08035198</td><td>Benign · correct</td><td>0.21873859</td><td>Benign · correct</td></tr>
+<tr data-row="323"><th scope="row">323</th><td>Malignant (1)</td><td>0.99999999</td><td>Malignant · correct</td><td>0.99998651</td><td>Malignant · correct</td></tr>
+<tr data-row="370"><th scope="row">370</th><td>Malignant (1)</td><td>0.99995440</td><td>Malignant · correct</td><td>0.99791332</td><td>Malignant · correct</td></tr>
+<tr data-row="309"><th scope="row">309</th><td>Benign (0)</td><td>0.00041326</td><td>Benign · correct</td><td>0.01122967</td><td>Benign · correct</td></tr>
+<tr data-row="167"><th scope="row">167</th><td>Malignant (1)</td><td>0.98321820</td><td>Malignant · correct</td><td>0.93233240</td><td>Malignant · correct</td></tr>
+<tr data-row="545"><th scope="row">545</th><td>Benign (0)</td><td>0.03758566</td><td>Benign · correct</td><td>0.14740529</td><td>Benign · correct</td></tr>
+<tr data-row="136"><th scope="row">136</th><td>Benign (0)</td><td>0.00211156</td><td>Benign · correct</td><td>0.02930045</td><td>Benign · correct</td></tr>
+<tr data-row="541"><th scope="row">541</th><td>Benign (0)</td><td>0.42046121</td><td>Benign · correct</td><td>0.49853437</td><td>Benign · correct</td></tr>
+<tr data-row="60"><th scope="row">60</th><td>Benign (0)</td><td>0.00009634</td><td>Benign · correct</td><td>0.00472645</td><td>Benign · correct</td></tr>
+<tr data-row="495"><th scope="row">495</th><td>Benign (0)</td><td>0.10537539</td><td>Benign · correct</td><td>0.25082547</td><td>Benign · correct</td></tr>
+<tr data-row="552"><th scope="row">552</th><td>Benign (0)</td><td>0.06751481</td><td>Benign · correct</td><td>0.20012090</td><td>Benign · correct</td></tr>
+<tr data-row="259"><th scope="row">259</th><td>Malignant (1)</td><td>0.99998634</td><td>Malignant · correct</td><td>0.99898483</td><td>Malignant · correct</td></tr>
+<tr data-row="442"><th scope="row">442</th><td>Benign (0)</td><td>0.00030105</td><td>Benign · correct</td><td>0.00930718</td><td>Benign · correct</td></tr>
+<tr data-row="356"><th scope="row">356</th><td>Benign (0)</td><td>0.02902641</td><td>Benign · correct</td><td>0.12840882</td><td>Benign · correct</td></tr>
+<tr data-row="317"><th scope="row">317</th><td>Malignant (1)</td><td>0.99834176</td><td>Malignant · correct</td><td>0.98232605</td><td>Malignant · correct</td></tr>
+<tr data-row="424"><th scope="row">424</th><td>Benign (0)</td><td>0.00233212</td><td>Benign · correct</td><td>0.03104431</td><td>Benign · correct</td></tr>
+<tr data-row="249"><th scope="row">249</th><td>Benign (0)</td><td>0.00238079</td><td>Benign · correct</td><td>0.03141932</td><td>Benign · correct</td></tr>
+<tr data-row="543"><th scope="row">543</th><td>Benign (0)</td><td>0.10217215</td><td>Benign · correct</td><td>0.24697065</td><td>Benign · correct</td></tr>
+<tr data-row="483"><th scope="row">483</th><td>Benign (0)</td><td>0.01736095</td><td>Benign · correct</td><td>0.09709307</td><td>Benign · correct</td></tr>
+<tr data-row="183"><th scope="row">183</th><td>Benign (0)</td><td>0.00005818</td><td>Benign · correct</td><td>0.00349878</td><td>Benign · correct</td></tr>
+<tr data-row="172"><th scope="row">172</th><td>Malignant (1)</td><td>0.97922726</td><td>Malignant · correct</td><td>0.92364440</td><td>Malignant · correct</td></tr>
+<tr data-row="366"><th scope="row">366</th><td>Malignant (1)</td><td>0.99999954</td><td>Malignant · correct</td><td>0.99986683</td><td>Malignant · correct</td></tr>
+<tr data-row="566"><th scope="row">566</th><td>Malignant (1)</td><td>0.98151940</td><td>Malignant · correct</td><td>0.92852969</td><td>Malignant · correct</td></tr>
+<tr data-row="499"><th scope="row">499</th><td>Malignant (1)</td><td>0.99999474</td><td>Malignant · correct</td><td>0.99942633</td><td>Malignant · correct</td></tr>
+<tr data-row="97"><th scope="row">97</th><td>Benign (0)</td><td>0.00002892</td><td>Benign · correct</td><td>0.00230521</td><td>Benign · correct</td></tr>
+<tr data-row="393"><th scope="row">393</th><td>Malignant (1)</td><td>0.99999994</td><td>Malignant · correct</td><td>0.99996020</td><td>Malignant · correct</td></tr>
+<tr data-row="536"><th scope="row">536</th><td>Malignant (1)</td><td>0.73662737</td><td>Malignant · correct</td><td>0.69039325</td><td>Malignant · correct</td></tr>
+<tr data-row="420"><th scope="row">420</th><td>Benign (0)</td><td>0.00832767</td><td>Benign · correct</td><td>0.06445130</td><td>Benign · correct</td></tr>
+<tr data-row="173"><th scope="row">173</th><td>Benign (0)</td><td>0.00000629</td><td>Benign · correct</td><td>0.00092639</td><td>Benign · correct</td></tr>
+<tr data-row="454"><th scope="row">454</th><td>Benign (0)</td><td>0.01349902</td><td>Benign · correct</td><td>0.08448420</td><td>Benign · correct</td></tr>
+<tr data-row="298"><th scope="row">298</th><td>Benign (0)</td><td>0.01439039</td><td>Benign · correct</td><td>0.08753576</td><td>Benign · correct</td></tr>
+</tbody></table></div></details>
+    </section>
+
+    <section id="comparison" class="investigation" aria-labelledby="comparison-heading">
+      <div class="section-heading"><div><p class="eyebrow">03 / MODEL COMPARISON</p><h2 id="comparison-heading">What counts as better?</h2></div><p>Calibration changed one classification. For 112 of the 114 samples, the new probability moved farther from the recorded outcome.</p></div>
+      <div class="comparison-scroll" tabindex="0" role="region" aria-label="Full-cohort metric comparison"><table class="comparison-table"><caption class="sr-only">Recomputed full-cohort metrics, raw and calibrated</caption><thead><tr><th scope="col">Metric</th><th scope="col" class="raw-heading">Raw logistic</th><th scope="col" class="cal-heading">Sigmoid calibrated</th><th scope="col">What changed?</th></tr></thead><tbody id="comparison-body"><tr><th scope="row">Accuracy <small>Correct / all test records</small></th><td>112 / 114 <small>98.25%</small></td><td>113 / 114 <small>99.12%</small></td><td>One more correct label</td></tr><tr><th scope="row">Brier score <small>Mean (probability − label)²</small></th><td>0.01209</td><td>0.02050</td><td class="adverse">Worse probability error</td></tr><tr><th scope="row">False negatives <small>Malignant predicted benign</small></th><td>2 / 42</td><td>1 / 42</td><td>One error remains</td></tr><tr><th scope="row">False positives <small>Benign predicted malignant</small></th><td>0 / 72</td><td>0 / 72</td><td>Unchanged</td></tr><tr><th scope="row">True positives <small>Malignant predicted malignant</small></th><td>40 / 42</td><td>41 / 42</td><td>One more positive identified</td></tr><tr><th scope="row">True negatives <small>Benign predicted benign</small></th><td>72 / 72</td><td>72 / 72</td><td>Unchanged</td></tr><tr><th scope="row">Log loss <small>Mean negative log probability; lower is better</small></th><td>0.05198</td><td>0.09642</td><td class="adverse">Also worsens</td></tr><tr><th scope="row">AUROC <small>Pairwise ranking; higher is better</small></th><td>0.999669</td><td>0.999669</td><td>Unchanged ranking</td></tr></tbody></table></div>
+      <div class="interpretation"><div><h3>How can both scores rise?</h3></div><p>Accuracy counts the correct labels at the 50% cutoff. The Brier score averages the squared distance from each probability to its recorded outcome, 1 for malignant and 0 for benign. A smaller distance improves the score even when the label stays the same.</p></div>
+      <details class="uncertainty"><summary>How much uncertainty is there?</summary><div id="uncertainty-detail"><p>The original run resampled the same 114 test records 2,000 times. It used paired samples for the Brier difference. These intervals describe the fitted models on this split and exclude variation from retraining.</p></div></details>
+    </section>
+
+    <section id="receipt" class="investigation receipt" aria-labelledby="receipt-heading">
+      <div class="section-heading"><div><p class="eyebrow">04 / EXPERIMENT RECEIPT</p><h2 id="receipt-heading">Trace the result.</h2></div><a class="download-link" href="observatory-receipt.json" download>Download receipt <span aria-hidden="true">↓</span></a></div>
+      <div class="receipt-grid"><dl id="receipt-fields"><div><dt>Dataset</dt><dd>Wisconsin Diagnostic Breast Cancer · 569 records · 30 features</dd></div><div><dt>Model</dt><dd>Standardized inputs, logistic regression (C=1), then sigmoid calibration on a separate partition.</dd></div><div><dt>Split</dt><dd>341 train / 114 calibration / 114 test · seed 20261113</dd></div><div><dt>Analysis date</dt><dd>13 November 2026 · scikit-learn 1.8.0 · Python 3.12.14</dd></div><div><dt>Source</dt><dd><a href="https://doi.org/10.24432/C5DW2B">UCI WDBC · DOI 10.24432/C5DW2B</a> · CC BY 4.0</dd></div><div><dt>Verification</dt><dd>Recomputed from saved predictions with an absolute metric tolerance of 1 × 10<sup>−12</sup>. Integer counts match exactly.</dd></div></dl><aside><h3>What this study covers</h3><p>The results come from one split of one historical dataset. They describe benchmark performance. Clinical use would require separate validation across sites and patient groups.</p><p>The <a href="./">Medical AI lab</a> also studies uncertainty in diabetes progression estimates and missing measurements in heart failure records.</p></aside></div>
+      <details class="receipt-json"><summary>Inspect the complete machine-readable receipt</summary><pre id="receipt-json">The receipt is available at observatory-receipt.json.</pre></details>
+      <div class="methods-links"><a href="protocol.md">Original protocol ↗</a><a href="calibration.html">Full calibration report ↗</a><a href="results.json" download>Frozen results ↓</a><a href="https://github.com/bomberJV/medical-ai-research">Source repository ↗</a></div>
+      <p class="footnote">The dataset credits William Wolberg, Olvi Mangasarian, Nick Street and W. Street. Source attribution and license remain attached to the receipt. Analysis and writing were AI-assisted. Not peer-reviewed.</p>
+    </section>
+    <noscript><div class="scope"><b>JavaScript is off.</b> The recorded comparison, methods, and limitations remain readable above. For all 114 individual predictions, use the complete record table above, or open <a href="results.json">the frozen results</a> and its <a href="observatory-receipt.json">experiment receipt</a>.</div></noscript>
+  </main>
+  <footer><span>Brandon Frank Han-Chween Huang</span><a href="./">Return to the experiments ↑</a></footer>
+  <script type="module" src="observatory.js"></script>
+</body>
+</html>

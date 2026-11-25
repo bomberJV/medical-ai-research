@@ -29,6 +29,19 @@ python3 -m http.server 8000 --directory site
 
 Open http://localhost:8000/medical/. The view uses recorded results; it does not retrain models or send health data anywhere. You can explore confidence thresholds, conformal coverages, model comparisons, and paired missingness masks. The reports can be printed to PDF from a browser.
 
+## Calibration in the Medical AI lab
+
+Open the [calibration study](site/medical/observatory.html) from the lab. Source row 215 was recorded as malignant. Sigmoid calibration shifted its estimated probability from 45.71% to 52.08%, crossing the 50% decision threshold. This accounts for the change from 112 to 113 correct classifications in 114 held-out records. Across those same records the Brier score worsened from 0.01209 to 0.02050. Inspect any record to compare both probabilities, or open the receipt to trace the result to the dataset and protocol.
+
+The study uses the recorded November 13 run. Accuracy, Brier score, AUROC and confusion counts are independently recomputed from its frozen predictions. The receipt gives the dataset and split hashes, model configuration, metric definitions, uncertainty scope and recorded environment for this benchmark split.
+
+```sh
+python research/build_observatory.py --check
+npm test
+```
+
+The receipt exporter uses only the Python standard library. See the [calibration export contract](research/OBSERVATORY.md) for regeneration, verification tolerances and acceptance boundaries.
+
 ## Experiments
 
 1. **Confidence is not accuracy.** WDBC logistic classification, independent sigmoid calibration, predefined selective-prediction thresholds. Calibration worsened Brier score on this split despite improving classification by one case.
