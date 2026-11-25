@@ -8,7 +8,26 @@ const results = JSON.parse(readFileSync(new URL('../site/medical/results.json', 
 const comparison = buildCalibrationComparison(results);
 const label = value => value === 1 ? 'Malignant' : 'Benign';
 const table = comparison.rows.map(record => `<tr data-row="${record.row}"><th scope="row">${record.row}</th><td>${label(record.truth)} (${record.truth})</td><td>${record.raw.toFixed(8)}</td><td${record.rawCorrect ? '' : ' class="incorrect"'}>${label(record.rawPrediction)} · ${record.rawCorrect ? 'correct' : 'incorrect'}</td><td>${record.calibrated.toFixed(8)}</td><td${record.calibratedCorrect ? '' : ' class="incorrect"'}>${label(record.calibratedPrediction)} · ${record.calibratedCorrect ? 'correct' : 'incorrect'}</td></tr>`).join('\n');
-const grid = comparison.rows.map((record, index) => `<span class="cohort-tile" role="img" aria-label="Test record ${index + 1} of ${comparison.cohortSize}, source row ${record.row}, raw ${record.rawCorrect ? 'correct' : 'incorrect'}, calibrated ${record.calibratedCorrect ? 'correct' : 'incorrect'}"><span class="tile-number" aria-hidden="true">${String(index + 1).padStart(3, '0')}</span><span class="tile-outcomes" aria-hidden="true"><span${record.rawCorrect ? '' : ' class="incorrect"'}>${record.rawCorrect ? '✓' : '×'}</span><span${record.calibratedCorrect ? '' : ' class="incorrect"'}>${record.calibratedCorrect ? '✓' : '×'}</span></span></span>`).join('\n');
+const grid = comparison.rows.map((record, index) => {
+  const number = String(index + 1).padStart(3, '0');
+  const models = ['raw', 'calibrated'];
+  const marks = models.map(model => record[model + 'Correct']
+    ? '<span>✓</span>' : '<span class="incorrect">×</span>').join('');
+  const estimates = models.map(model => {
+    const name = model === 'raw' ? 'Raw' : 'Calibrated';
+    const probability = (record[model] * 100).toFixed(2);
+    return `<p><strong>${name} ${probability}%</strong><span>${label(record[model + 'Prediction'])} · ${record[model + 'Correct'] ? 'correct' : 'incorrect'}</span></p>`;
+  }).join('');
+  return `<details class="native-record" id="record-${number}" name="calibration-record">
+    <summary class="cohort-tile" aria-label="Test record ${number}, source row ${record.row}">
+      <span class="tile-number">${number}</span><span class="tile-outcomes" aria-hidden="true">${marks}</span>
+    </summary>
+    <section class="native-estimates" aria-label="Prediction details">
+      <header>Test record ${number} · Source row ${record.row}<br>Recorded label <b>${label(record.truth)}</b></header>
+      ${estimates}
+    </section>
+  </details>`;
+}).join('\n');
 const output = source.replace(/(<tbody id="record-table">)[\s\S]*?(<\/tbody>)/, `$1\n${table}\n$2`).replace(/(<div id="cohort-grid"[^>]*>)[\s\S]*?(<\/div>)/, `$1\n${grid}\n$2`);
 if (process.argv.includes('--check')) {
   if (source !== output) throw new Error('Static calibration cohort is stale. Run node research/build_observatory_view.mjs.');

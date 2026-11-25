@@ -25,7 +25,7 @@ function renderCohort() {
     const description = `Test record ${index + 1} of ${comparison.cohortSize}, source row ${record.row}, recorded ${label(record.truth)}, raw ${record.rawCorrect ? 'correct' : 'incorrect'}, calibrated ${record.calibratedCorrect ? 'correct' : 'incorrect'}`;
     const marks = ['raw', 'calibrated'].map(model => record[model + 'Correct']
       ? '<span>✓</span>' : '<span class="incorrect">×</span>').join('');
-    return `<button class="cohort-tile" ${buttonAttributes(record)} aria-label="${escape(description)}"><span class="tile-number" aria-hidden="true">${String(index + 1).padStart(3, '0')}</span><span class="tile-outcomes" aria-hidden="true">${marks}</span></button>`;
+    return `<button id="record-${String(index + 1).padStart(3, '0')}" class="cohort-tile" ${buttonAttributes(record)} aria-label="${escape(description)}"><span class="tile-number" aria-hidden="true">${String(index + 1).padStart(3, '0')}</span><span class="tile-outcomes" aria-hidden="true">${marks}</span></button>`;
   }).join('');
   $('#record-table').innerHTML = comparison.rows.map(record => `
     <tr data-row="${record.row}">
@@ -173,7 +173,7 @@ try {
   renderCohort();
   renderComparison();
   renderReceipt(receipt);
-  $('#cohort-help').hidden = false;
+  $('#keyboard-help').hidden = false;
   if (typeof ResizeObserver === 'function') {
     new ResizeObserver(() => {
       const readout = $('#cohort-grid > #record-inspector');

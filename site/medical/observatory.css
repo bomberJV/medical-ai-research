@@ -39,6 +39,28 @@
 .inspector-estimate.calibrated > strong {color: var(--cal)}
 .inspector-estimate .incorrect {color: var(--error); font-weight: bold}
 .cohort-tile:focus-visible {outline-offset: 0; z-index: 1}
+.cohort-grid > .cohort-tile[id], .cohort-grid > .native-record {scroll-margin-block-start: 24vh}
+.native-record {min-width: 0}
+.native-record > summary {
+  display: grid;
+  align-content: center;
+  width: 100%;
+  min-height: 44px;
+  list-style: none;
+}
+.native-record > summary::-webkit-details-marker {display: none}
+.native-record[open] {
+  grid-column: 1 / -1;
+  border: 1px solid var(--raw);
+  border-radius: 3px;
+  background: #eaf0e6;
+}
+.native-record[open] > summary {margin: 0; border: 0; border-bottom: 1px solid var(--line)}
+.native-estimates {display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 14px}
+.native-estimates header {grid-column: 1 / -1; font-size: 14px}
+.native-estimates p {margin: 0}
+.native-estimates p strong, .native-estimates p span {display: block}
+.native-estimates p span {font-size: 12px}
 .table-scroll {container-type: inline-size}
 .table-scroll .inspector-cell {padding: 0}
 .inspector-cell #record-inspector {

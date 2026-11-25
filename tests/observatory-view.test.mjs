@@ -13,6 +13,20 @@ const staticTable = page.match(/<tbody id="record-table">([\s\S]*?)<\/tbody>/)[1
 const featuredRow = page.match(/data-featured-row="(\d+)"/)?.[1];
 let run = 0;
 
+test('every cohort tile can reveal its frozen probabilities without JavaScript', () => {
+  const tiles = [...page.matchAll(/<details class="native-record" id="record-(\d+)"[^>]*>([\s\S]*?)<\/details>/g)];
+  assert.equal(tiles.length, results.calibration.records.length);
+  for (const [index, record] of results.calibration.records.entries()) {
+    const [, number, content] = tiles[index];
+    assert.equal(Number(number), index + 1);
+    assert.match(content, /<summary\b/);
+    assert.ok(content.includes(`source row ${record.row}"`));
+    for (const [name, value] of [['Raw', record.raw], ['Calibrated', record.calibrated]]) {
+      assert.ok(content.includes(`${name} ${(value * 100).toFixed(2)}%`));
+    }
+  }
+});
+
 test('static no-JavaScript table preserves every frozen test row and both probabilities', () => {
   const rows = [...staticTable.matchAll(/<tr data-row="(\d+)">([\s\S]*?)<\/tr>/g)];
   assert.equal(rows.length, 114);
