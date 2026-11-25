@@ -4,43 +4,46 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#122522">
-  <title>AI Reliability Observatory — Calibration comparison</title>
-  <meta name="description" content="Inspect all 114 held-out benchmark predictions: sigmoid calibration improves label accuracy while worsening Brier score. Frozen results, recomputed metrics, and an experiment receipt.">
+  <title>Calibration study | Medical AI lab</title>
+  <meta name="description" content="One malignant sample crossed the 50% cutoff after calibration. Explore why accuracy rose while probability error grew across all 114 held-out breast cancer benchmark records.">
   <link rel="stylesheet" href="observatory.css">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to the investigation</a>
   <header class="site-header">
-    <a class="wordmark" href="./"><b>B.</b><span>RESEARCH NOTEBOOK</span></a>
+    <a class="wordmark" href="./"><b>B.</b><span>MEDICAL AI LAB</span></a>
     <a href="./">All medical experiments <span aria-hidden="true">↗</span></a>
   </header>
   <main id="main">
     <section class="hero" aria-labelledby="title">
-      <div class="hero-top"><p class="eyebrow">AI RELIABILITY OBSERVATORY</p><span class="evidence-tag">Recorded experiment · analysis date 13 Nov 2026</span></div>
+      <div class="hero-top"><p class="eyebrow">CALIBRATION STUDY</p><span class="evidence-tag">13 November 2026</span></div>
       <div class="hero-layout">
-        <div><h1 id="title">A better label.<br>A worse <em>probability.</em></h1><p class="hero-copy">Calibration gets one more answer right. The probabilities, taken together, get worse. Follow one prediction into the full test cohort and inspect what each metric actually measures.</p><a class="hero-link" href="#one-record">Inspect the evidence <span aria-hidden="true">↓</span></a></div>
-        <div class="finding-card"><span class="eyebrow">SAME 114 TEST RECORDS</span><div class="finding"><span>Correct labels <small>Raw → calibrated</small></span><b>112 <i>→</i> 113</b></div><div class="finding"><span>Brier score <small>Lower is better</small></span><b>0.01209 <i>→</i> 0.02050</b></div><p>One metric improves. Another worsens.<br>Neither result cancels the other.</p></div>
+        <div><h1 id="title">One more <em>correct label.</em></h1><p class="hero-copy">For one malignant sample, calibration raised the estimated probability of malignancy from 45.71% to 52.08%. That changed the model’s answer. Across all 114 test records, its probability estimates got worse overall.</p><a class="hero-link" href="#one-record">Inspect the prediction <span aria-hidden="true">↓</span></a></div>
+        <div class="finding-card"><span class="eyebrow">ALL 114 TEST RECORDS</span><div class="finding"><span>Correct labels <small>Before → after calibration</small></span><b>112 <i>→</i> 113</b></div><div class="finding"><span>Brier score <small>Average squared probability error</small></span><b>0.01209 <i>→</i> 0.02050</b></div></div>
       </div>
       <div class="hero-meta"><span>WISCONSIN DIAGNOSTIC BREAST CANCER</span><span>341 train / 114 calibration / 114 test</span><span>One fixed split · Seed 20261113</span></div>
     </section>
 
-    <div class="scope"><b>Public-data research.</b> Pre-extracted cell-nucleus features, not an image-reading model. This benchmark does not establish clinical safety or external validity. No patient data are accepted.</div>
-    <nav class="section-nav" aria-label="Investigation sections"><a href="#one-record">01 Prediction</a><a href="#cohort">02 Cohort</a><a href="#comparison">03 Comparison</a><a href="#deferral">04 Deferral</a><a href="#receipt">05 Receipt</a></nav>
+    <div class="scope"><b>Public benchmark.</b> The model uses 30 measurements of cell nuclei from the Wisconsin Diagnostic Breast Cancer dataset. The study evaluates predictions on those historical records.</div>
+    <nav class="section-nav" aria-label="Study sections"><a href="#one-record">01 Prediction</a><a href="#cohort">02 Cohort</a><a href="#comparison">03 Comparison</a><a href="#receipt">04 Receipt</a></nav>
     <p id="load-status" class="load-status" role="status">Recorded reference snapshot. Interactive metric checks run when JavaScript and the frozen files are available.</p>
 
     <section id="one-record" class="investigation" aria-labelledby="record-heading">
-      <div class="section-heading"><div><p class="eyebrow">01 / ONE HELD-OUT PREDICTION</p><h2 id="record-heading">Start with a record.</h2></div><p>A benchmark row, not a person’s case history. The initial selection is the first row in the frozen export.</p></div>
-      <div id="record-detail" class="record-detail" aria-live="polite" aria-atomic="true">
-        <div class="record-identity"><span class="eyebrow">SOURCE ROW ORDINAL</span><strong>147</strong><span>Recorded label <b>Benign (0)</b></span><small>Test position 1 / 114 · zero-based source ordinal</small></div>
-        <div class="prediction raw"><span class="model-label">RAW LOGISTIC</span><strong>0.81<span>%</span></strong><p>Predicted malignancy probability</p><div class="outcome">✓ Benign · correct</div><small>Squared error 0.000066</small></div>
-        <div class="prediction calibrated"><span class="model-label">SIGMOID CALIBRATED</span><strong>6.37<span>%</span></strong><p>Predicted malignancy probability</p><div class="outcome">✓ Benign · correct</div><small>Squared error 0.004053</small></div>
+      <div class="section-heading"><div><p class="eyebrow">01 / ONE HELD-OUT PREDICTION</p><h2 id="record-heading">The sample that crossed 50%.</h2></div><p>The dataset labels this sample malignant. The model assigns that label when its probability estimate reaches 50%. This was the only record to cross the cutoff.</p></div>
+      <div id="record-detail" class="record-detail" data-featured-row="215">
+        <div class="record-identity"><span class="eyebrow">SOURCE ROW</span><strong>215</strong><span>Recorded label <b>Malignant (1)</b></span><small>Test record 81 of 114 · source rows start at zero</small></div>
+        <div class="prediction raw"><span class="model-label">RAW LOGISTIC</span><strong>45.71<span>%</span></strong><p>Estimated probability of malignancy</p><div class="outcome incorrect">× Benign · incorrect</div><small>Squared error 0.294725</small></div>
+        <div class="prediction calibrated"><span class="model-label">SIGMOID CALIBRATED</span><strong>52.08<span>%</span></strong><p>Estimated probability of malignancy</p><div class="outcome">✓ Malignant · correct</div><small>Squared error 0.229624</small></div>
       </div>
-      <p class="footnote">Malignant = 1, benign = 0. A probability ≥ 0.5 predicts malignant. “Correct” describes the benchmark label, not a clinical judgment. Select any record below to inspect both frozen predictions.</p>
+      <p class="footnote">Calibration uses a separate set of 114 labeled examples to adjust the model’s probabilities. The 114 test samples shown here were held out of both training and calibration.</p>
     </section>
 
     <section id="cohort" class="investigation" aria-labelledby="cohort-heading">
-      <div class="section-heading"><div><p class="eyebrow">02 / KEEP THE DENOMINATOR</p><h2 id="cohort-heading">All 114. Nothing hidden.</h2></div><p>42 malignant labels. 72 benign labels. Every held-out record stays in view, including errors and deferred predictions.</p></div>
-      <div class="cohort-panel"><div class="cohort-key"><span>Each tile = one test record</span><span><b class="key-raw">R</b> Raw <b class="key-calibrated">C</b> Calibrated</span><span>✓ Correct <b class="error-key">× Incorrect</b> · D Deferred</span></div><div id="cohort-grid" class="cohort-grid" aria-label="All held-out records">
+      <div class="section-heading"><div><p class="eyebrow">02 / TEST COHORT</p><h2 id="cohort-heading">All 114 predictions.</h2></div><p>The test set contains 42 malignant samples and 72 benign samples. Each tile shows how the two predictions compare with the recorded label.</p></div>
+      <div class="cohort-panel">
+        <div class="cohort-key"><span>Each tile shows the raw prediction on the left and the calibrated prediction on the right.</span><span>✓ Correct <b class="error-key">× Incorrect</b></span></div>
+        <p id="cohort-help" class="cohort-help" hidden>Select a record to compare its probabilities. Use the arrow keys to browse.</p>
+        <div id="cohort-grid" class="cohort-grid" aria-label="All held-out records" aria-describedby="cohort-help">
 <span class="cohort-tile" role="img" aria-label="Test record 1 of 114, source row 147, raw correct, calibrated correct"><span class="tile-number" aria-hidden="true">001</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span></span>
 <span class="cohort-tile" role="img" aria-label="Test record 2 of 114, source row 402, raw correct, calibrated correct"><span class="tile-number" aria-hidden="true">002</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span></span>
 <span class="cohort-tile" role="img" aria-label="Test record 3 of 114, source row 148, raw correct, calibrated correct"><span class="tile-number" aria-hidden="true">003</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span></span>
@@ -155,144 +158,141 @@
 <span class="cohort-tile" role="img" aria-label="Test record 112 of 114, source row 173, raw correct, calibrated correct"><span class="tile-number" aria-hidden="true">112</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span></span>
 <span class="cohort-tile" role="img" aria-label="Test record 113 of 114, source row 454, raw correct, calibrated correct"><span class="tile-number" aria-hidden="true">113</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span></span>
 <span class="cohort-tile" role="img" aria-label="Test record 114 of 114, source row 298, raw correct, calibrated correct"><span class="tile-number" aria-hidden="true">114</span><span class="tile-outcomes" aria-hidden="true"><span>✓</span><span>✓</span></span></span>
-</div><div class="cohort-footer"><span id="cohort-count">114 records in the fixed test cohort</span><a href="#one-record">Inspect selected record ↑</a></div></div>
-      <details class="table-disclosure"><summary>Read all 114 record-level predictions as a table</summary><p id="table-note" class="footnote">Original test order; source ordinals are zero-based. Probabilities are for malignant (1). Predictions use p ≥ 0.5. The table never filters out deferred records.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Full prediction table, scroll horizontally on small screens"><table aria-describedby="table-note"><caption>All held-out WDBC predictions · 114 records</caption><thead><tr><th scope="col">Source row</th><th scope="col">Recorded label</th><th scope="col">Raw probability</th><th scope="col">Raw outcome</th><th scope="col">Calibrated probability</th><th scope="col">Calibrated outcome</th><th scope="col">Calibrated deferral</th></tr></thead><tbody id="record-table">
-<tr data-row="147"><th scope="row">147</th><td>Benign (0)</td><td>0.00814896</td><td>Benign · correct</td><td>0.06366619</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="402"><th scope="row">402</th><td>Benign (0)</td><td>0.00164988</td><td>Benign · correct</td><td>0.02537237</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="148"><th scope="row">148</th><td>Benign (0)</td><td>0.14171884</td><td>Benign · correct</td><td>0.29069814</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="382"><th scope="row">382</th><td>Benign (0)</td><td>0.00054012</td><td>Benign · correct</td><td>0.01315704</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="125"><th scope="row">125</th><td>Benign (0)</td><td>0.00215330</td><td>Benign · correct</td><td>0.02963632</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="218"><th scope="row">218</th><td>Malignant (1)</td><td>0.99999869</td><td>Malignant · correct</td><td>0.99975069</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="94"><th scope="row">94</th><td>Malignant (1)</td><td>0.99437664</td><td>Malignant · correct</td><td>0.96388927</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="466"><th scope="row">466</th><td>Benign (0)</td><td>0.18952906</td><td>Benign · correct</td><td>0.33544588</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="329"><th scope="row">329</th><td>Malignant (1)</td><td>0.79174052</td><td>Malignant · correct</td><td>0.72823926</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="465"><th scope="row">465</th><td>Benign (0)</td><td>0.07145439</td><td>Benign · correct</td><td>0.20602521</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="447"><th scope="row">447</th><td>Benign (0)</td><td>0.05890698</td><td>Benign · correct</td><td>0.18653428</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="522"><th scope="row">522</th><td>Benign (0)</td><td>0.00017563</td><td>Benign · correct</td><td>0.00675758</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="253"><th scope="row">253</th><td>Malignant (1)</td><td>0.99261466</td><td>Malignant · correct</td><td>0.95771635</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="152"><th scope="row">152</th><td>Benign (0)</td><td>0.04656301</td><td>Benign · correct</td><td>0.16503039</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="41"><th scope="row">41</th><td>Malignant (1)</td><td>0.65474774</td><td>Malignant · correct</td><td>0.63861510</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="273"><th scope="row">273</th><td>Benign (0)</td><td>0.00013931</td><td>Benign · correct</td><td>0.00588733</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="553"><th scope="row">553</th><td>Benign (0)</td><td>0.00006142</td><td>Benign · correct</td><td>0.00361374</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="506"><th scope="row">506</th><td>Benign (0)</td><td>0.00515052</td><td>Benign · correct</td><td>0.04904241</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="357"><th scope="row">357</th><td>Benign (0)</td><td>0.00271729</td><td>Benign · correct</td><td>0.03392582</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="138"><th scope="row">138</th><td>Malignant (1)</td><td>0.99984082</td><td>Malignant · correct</td><td>0.99559967</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="254"><th scope="row">254</th><td>Malignant (1)</td><td>0.99999028</td><td>Malignant · correct</td><td>0.99917165</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="236"><th scope="row">236</th><td>Malignant (1)</td><td>1.00000000</td><td>Malignant · correct</td><td>0.99999960</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="557"><th scope="row">557</th><td>Benign (0)</td><td>0.00049473</td><td>Benign · correct</td><td>0.01249157</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="179"><th scope="row">179</th><td>Benign (0)</td><td>0.00006951</td><td>Benign · correct</td><td>0.00389052</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="388"><th scope="row">388</th><td>Benign (0)</td><td>0.00002893</td><td>Benign · correct</td><td>0.00230590</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="423"><th scope="row">423</th><td>Benign (0)</td><td>0.09516013</td><td>Benign · correct</td><td>0.23829403</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="38"><th scope="row">38</th><td>Malignant (1)</td><td>0.80527089</td><td>Malignant · correct</td><td>0.73809036</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="64"><th scope="row">64</th><td>Malignant (1)</td><td>0.99298654</td><td>Malignant · correct</td><td>0.95896011</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="551"><th scope="row">551</th><td>Benign (0)</td><td>0.00150829</td><td>Benign · correct</td><td>0.02407543</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="381"><th scope="row">381</th><td>Benign (0)</td><td>0.00032448</td><td>Benign · correct</td><td>0.00973021</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="395"><th scope="row">395</th><td>Benign (0)</td><td>0.00369553</td><td>Benign · correct</td><td>0.04052773</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="133"><th scope="row">133</th><td>Benign (0)</td><td>0.15222246</td><td>Benign · correct</td><td>0.30115126</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="358"><th scope="row">358</th><td>Benign (0)</td><td>0.00008153</td><td>Benign · correct</td><td>0.00427890</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="56"><th scope="row">56</th><td>Malignant (1)</td><td>0.99999886</td><td>Malignant · correct</td><td>0.99977087</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="8"><th scope="row">8</th><td>Malignant (1)</td><td>0.99082002</td><td>Malignant · correct</td><td>0.95206756</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="501"><th scope="row">501</th><td>Malignant (1)</td><td>0.94760489</td><td>Malignant · correct</td><td>0.87207324</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="24"><th scope="row">24</th><td>Malignant (1)</td><td>0.99999987</td><td>Malignant · correct</td><td>0.99993611</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="493"><th scope="row">493</th><td>Benign (0)</td><td>0.00001995</td><td>Benign · correct</td><td>0.00184651</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="547"><th scope="row">547</th><td>Benign (0)</td><td>0.00008588</td><td>Benign · correct</td><td>0.00441367</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="546"><th scope="row">546</th><td>Benign (0)</td><td>0.00008070</td><td>Benign · correct</td><td>0.00425287</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="531"><th scope="row">531</th><td>Benign (0)</td><td>0.02409275</td><td>Benign · correct</td><td>0.11612359</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="346"><th scope="row">346</th><td>Benign (0)</td><td>0.00181007</td><td>Benign · correct</td><td>0.02678341</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="176"><th scope="row">176</th><td>Benign (0)</td><td>0.00002323</td><td>Benign · correct</td><td>0.00202237</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="261"><th scope="row">261</th><td>Malignant (1)</td><td>0.83956290</td><td>Malignant · correct</td><td>0.76440729</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="88"><th scope="row">88</th><td>Benign (0)</td><td>0.07966171</td><td>Benign · correct</td><td>0.21778069</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="288"><th scope="row">288</th><td>Benign (0)</td><td>0.00097789</td><td>Benign · correct</td><td>0.01867117</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="229"><th scope="row">229</th><td>Malignant (1)</td><td>0.95839065</td><td>Malignant · correct</td><td>0.88737201</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="327"><th scope="row">327</th><td>Benign (0)</td><td>0.00013149</td><td>Benign · correct</td><td>0.00568832</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="198"><th scope="row">198</th><td>Malignant (1)</td><td>0.99965332</td><td>Malignant · correct</td><td>0.99300531</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="165"><th scope="row">165</th><td>Benign (0)</td><td>0.00942437</td><td>Benign · correct</td><td>0.06910635</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="243"><th scope="row">243</th><td>Benign (0)</td><td>0.02880856</td><td>Benign · correct</td><td>0.12788993</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="156"><th scope="row">156</th><td>Malignant (1)</td><td>0.99847586</td><td>Malignant · correct</td><td>0.98318280</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="21"><th scope="row">21</th><td>Benign (0)</td><td>0.00003810</td><td>Benign · correct</td><td>0.00271754</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="507"><th scope="row">507</th><td>Benign (0)</td><td>0.00021523</td><td>Benign · correct</td><td>0.00762576</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="169"><th scope="row">169</th><td>Benign (0)</td><td>0.01221082</td><td>Benign · correct</td><td>0.07989709</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="433"><th scope="row">433</th><td>Malignant (1)</td><td>0.99994387</td><td>Malignant · correct</td><td>0.99763766</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="30"><th scope="row">30</th><td>Malignant (1)</td><td>0.99999961</td><td>Malignant · correct</td><td>0.99987959</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="102"><th scope="row">102</th><td>Benign (0)</td><td>0.01387879</td><td>Benign · correct</td><td>0.08579586</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="373"><th scope="row">373</th><td>Malignant (1)</td><td>0.99999011</td><td>Malignant · correct</td><td>0.99916299</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="82"><th scope="row">82</th><td>Malignant (1)</td><td>1.00000000</td><td>Malignant · correct</td><td>0.99999853</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="434"><th scope="row">434</th><td>Benign (0)</td><td>0.01033057</td><td>Benign · correct</td><td>0.07276387</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="540"><th scope="row">540</th><td>Benign (0)</td><td>0.00006231</td><td>Benign · correct</td><td>0.00364505</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="379"><th scope="row">379</th><td>Malignant (1)</td><td>0.97427701</td><td>Malignant · correct</td><td>0.91387807</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="31"><th scope="row">31</th><td>Malignant (1)</td><td>0.98728844</td><td>Malignant · correct</td><td>0.94223388</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="384"><th scope="row">384</th><td>Benign (0)</td><td>0.00206814</td><td>Benign · correct</td><td>0.02894800</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="43"><th scope="row">43</th><td>Malignant (1)</td><td>0.90755037</td><td>Malignant · correct</td><td>0.82543504</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="330"><th scope="row">330</th><td>Malignant (1)</td><td>0.93897753</td><td>Malignant · correct</td><td>0.86088832</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="127"><th scope="row">127</th><td>Malignant (1)</td><td>0.99835439</td><td>Malignant · correct</td><td>0.98240544</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="185"><th scope="row">185</th><td>Benign (0)</td><td>0.00015056</td><td>Benign · correct</td><td>0.00616592</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="189"><th scope="row">189</th><td>Benign (0)</td><td>0.00028358</td><td>Benign · correct</td><td>0.00898283</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="118"><th scope="row">118</th><td>Malignant (1)</td><td>0.99992590</td><td>Malignant · correct</td><td>0.99721139</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="275"><th scope="row">275</th><td>Benign (0)</td><td>0.01567477</td><td>Benign · correct</td><td>0.09177595</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="291"><th scope="row">291</th><td>Benign (0)</td><td>0.32597504</td><td>Benign · correct</td><td>0.43815415</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="25"><th scope="row">25</th><td>Malignant (1)</td><td>0.99999682</td><td>Malignant · correct</td><td>0.99957541</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="190"><th scope="row">190</th><td>Malignant (1)</td><td>0.41470099</td><td class="incorrect">Benign · incorrect</td><td>0.49498979</td><td class="incorrect">Benign · incorrect</td><td>Retained at 50%</td></tr>
-<tr data-row="166"><th scope="row">166</th><td>Benign (0)</td><td>0.00001400</td><td>Benign · correct</td><td>0.00149409</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="374"><th scope="row">374</th><td>Benign (0)</td><td>0.00316616</td><td>Benign · correct</td><td>0.03706654</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="390"><th scope="row">390</th><td>Benign (0)</td><td>0.00005684</td><td>Benign · correct</td><td>0.00345063</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="159"><th scope="row">159</th><td>Benign (0)</td><td>0.00009754</td><td>Benign · correct</td><td>0.00476149</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="519"><th scope="row">519</th><td>Benign (0)</td><td>0.01073483</td><td>Benign · correct</td><td>0.07434644</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="215"><th scope="row">215</th><td>Malignant (1)</td><td>0.45711416</td><td class="incorrect">Benign · incorrect</td><td>0.52080944</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="427"><th scope="row">427</th><td>Benign (0)</td><td>0.02318665</td><td>Benign · correct</td><td>0.11373280</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="139"><th scope="row">139</th><td>Benign (0)</td><td>0.00009186</td><td>Benign · correct</td><td>0.00459411</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="484"><th scope="row">484</th><td>Benign (0)</td><td>0.08035198</td><td>Benign · correct</td><td>0.21873859</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="323"><th scope="row">323</th><td>Malignant (1)</td><td>0.99999999</td><td>Malignant · correct</td><td>0.99998651</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="370"><th scope="row">370</th><td>Malignant (1)</td><td>0.99995440</td><td>Malignant · correct</td><td>0.99791332</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="309"><th scope="row">309</th><td>Benign (0)</td><td>0.00041326</td><td>Benign · correct</td><td>0.01122967</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="167"><th scope="row">167</th><td>Malignant (1)</td><td>0.98321820</td><td>Malignant · correct</td><td>0.93233240</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="545"><th scope="row">545</th><td>Benign (0)</td><td>0.03758566</td><td>Benign · correct</td><td>0.14740529</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="136"><th scope="row">136</th><td>Benign (0)</td><td>0.00211156</td><td>Benign · correct</td><td>0.02930045</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="541"><th scope="row">541</th><td>Benign (0)</td><td>0.42046121</td><td>Benign · correct</td><td>0.49853437</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="60"><th scope="row">60</th><td>Benign (0)</td><td>0.00009634</td><td>Benign · correct</td><td>0.00472645</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="495"><th scope="row">495</th><td>Benign (0)</td><td>0.10537539</td><td>Benign · correct</td><td>0.25082547</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="552"><th scope="row">552</th><td>Benign (0)</td><td>0.06751481</td><td>Benign · correct</td><td>0.20012090</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="259"><th scope="row">259</th><td>Malignant (1)</td><td>0.99998634</td><td>Malignant · correct</td><td>0.99898483</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="442"><th scope="row">442</th><td>Benign (0)</td><td>0.00030105</td><td>Benign · correct</td><td>0.00930718</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="356"><th scope="row">356</th><td>Benign (0)</td><td>0.02902641</td><td>Benign · correct</td><td>0.12840882</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="317"><th scope="row">317</th><td>Malignant (1)</td><td>0.99834176</td><td>Malignant · correct</td><td>0.98232605</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="424"><th scope="row">424</th><td>Benign (0)</td><td>0.00233212</td><td>Benign · correct</td><td>0.03104431</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="249"><th scope="row">249</th><td>Benign (0)</td><td>0.00238079</td><td>Benign · correct</td><td>0.03141932</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="543"><th scope="row">543</th><td>Benign (0)</td><td>0.10217215</td><td>Benign · correct</td><td>0.24697065</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="483"><th scope="row">483</th><td>Benign (0)</td><td>0.01736095</td><td>Benign · correct</td><td>0.09709307</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="183"><th scope="row">183</th><td>Benign (0)</td><td>0.00005818</td><td>Benign · correct</td><td>0.00349878</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="172"><th scope="row">172</th><td>Malignant (1)</td><td>0.97922726</td><td>Malignant · correct</td><td>0.92364440</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="366"><th scope="row">366</th><td>Malignant (1)</td><td>0.99999954</td><td>Malignant · correct</td><td>0.99986683</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="566"><th scope="row">566</th><td>Malignant (1)</td><td>0.98151940</td><td>Malignant · correct</td><td>0.92852969</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="499"><th scope="row">499</th><td>Malignant (1)</td><td>0.99999474</td><td>Malignant · correct</td><td>0.99942633</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="97"><th scope="row">97</th><td>Benign (0)</td><td>0.00002892</td><td>Benign · correct</td><td>0.00230521</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="393"><th scope="row">393</th><td>Malignant (1)</td><td>0.99999994</td><td>Malignant · correct</td><td>0.99996020</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="536"><th scope="row">536</th><td>Malignant (1)</td><td>0.73662737</td><td>Malignant · correct</td><td>0.69039325</td><td>Malignant · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="420"><th scope="row">420</th><td>Benign (0)</td><td>0.00832767</td><td>Benign · correct</td><td>0.06445130</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="173"><th scope="row">173</th><td>Benign (0)</td><td>0.00000629</td><td>Benign · correct</td><td>0.00092639</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="454"><th scope="row">454</th><td>Benign (0)</td><td>0.01349902</td><td>Benign · correct</td><td>0.08448420</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
-<tr data-row="298"><th scope="row">298</th><td>Benign (0)</td><td>0.01439039</td><td>Benign · correct</td><td>0.08753576</td><td>Benign · correct</td><td>Retained at 50%</td></tr>
+</div>
+        <p id="selection-status" class="sr-only" role="status"></p>
+        <div class="cohort-footer"><span id="cohort-count">114 records in original test order</span></div>
+      </div>
+      <details class="table-disclosure"><summary>Read all 114 predictions as a table</summary><p id="table-note" class="footnote">Source rows start at zero. Each probability is the model’s estimate for malignant (1). An estimate of 0.5 or higher gives a malignant prediction.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Full prediction table, scroll horizontally on small screens"><table aria-describedby="table-note"><caption>All held-out WDBC predictions · 114 records</caption><thead><tr><th scope="col">Source row</th><th scope="col">Recorded label</th><th scope="col">Raw probability</th><th scope="col">Raw outcome</th><th scope="col">Calibrated probability</th><th scope="col">Calibrated outcome</th></tr></thead><tbody id="record-table">
+<tr data-row="147"><th scope="row">147</th><td>Benign (0)</td><td>0.00814896</td><td>Benign · correct</td><td>0.06366619</td><td>Benign · correct</td></tr>
+<tr data-row="402"><th scope="row">402</th><td>Benign (0)</td><td>0.00164988</td><td>Benign · correct</td><td>0.02537237</td><td>Benign · correct</td></tr>
+<tr data-row="148"><th scope="row">148</th><td>Benign (0)</td><td>0.14171884</td><td>Benign · correct</td><td>0.29069814</td><td>Benign · correct</td></tr>
+<tr data-row="382"><th scope="row">382</th><td>Benign (0)</td><td>0.00054012</td><td>Benign · correct</td><td>0.01315704</td><td>Benign · correct</td></tr>
+<tr data-row="125"><th scope="row">125</th><td>Benign (0)</td><td>0.00215330</td><td>Benign · correct</td><td>0.02963632</td><td>Benign · correct</td></tr>
+<tr data-row="218"><th scope="row">218</th><td>Malignant (1)</td><td>0.99999869</td><td>Malignant · correct</td><td>0.99975069</td><td>Malignant · correct</td></tr>
+<tr data-row="94"><th scope="row">94</th><td>Malignant (1)</td><td>0.99437664</td><td>Malignant · correct</td><td>0.96388927</td><td>Malignant · correct</td></tr>
+<tr data-row="466"><th scope="row">466</th><td>Benign (0)</td><td>0.18952906</td><td>Benign · correct</td><td>0.33544588</td><td>Benign · correct</td></tr>
+<tr data-row="329"><th scope="row">329</th><td>Malignant (1)</td><td>0.79174052</td><td>Malignant · correct</td><td>0.72823926</td><td>Malignant · correct</td></tr>
+<tr data-row="465"><th scope="row">465</th><td>Benign (0)</td><td>0.07145439</td><td>Benign · correct</td><td>0.20602521</td><td>Benign · correct</td></tr>
+<tr data-row="447"><th scope="row">447</th><td>Benign (0)</td><td>0.05890698</td><td>Benign · correct</td><td>0.18653428</td><td>Benign · correct</td></tr>
+<tr data-row="522"><th scope="row">522</th><td>Benign (0)</td><td>0.00017563</td><td>Benign · correct</td><td>0.00675758</td><td>Benign · correct</td></tr>
+<tr data-row="253"><th scope="row">253</th><td>Malignant (1)</td><td>0.99261466</td><td>Malignant · correct</td><td>0.95771635</td><td>Malignant · correct</td></tr>
+<tr data-row="152"><th scope="row">152</th><td>Benign (0)</td><td>0.04656301</td><td>Benign · correct</td><td>0.16503039</td><td>Benign · correct</td></tr>
+<tr data-row="41"><th scope="row">41</th><td>Malignant (1)</td><td>0.65474774</td><td>Malignant · correct</td><td>0.63861510</td><td>Malignant · correct</td></tr>
+<tr data-row="273"><th scope="row">273</th><td>Benign (0)</td><td>0.00013931</td><td>Benign · correct</td><td>0.00588733</td><td>Benign · correct</td></tr>
+<tr data-row="553"><th scope="row">553</th><td>Benign (0)</td><td>0.00006142</td><td>Benign · correct</td><td>0.00361374</td><td>Benign · correct</td></tr>
+<tr data-row="506"><th scope="row">506</th><td>Benign (0)</td><td>0.00515052</td><td>Benign · correct</td><td>0.04904241</td><td>Benign · correct</td></tr>
+<tr data-row="357"><th scope="row">357</th><td>Benign (0)</td><td>0.00271729</td><td>Benign · correct</td><td>0.03392582</td><td>Benign · correct</td></tr>
+<tr data-row="138"><th scope="row">138</th><td>Malignant (1)</td><td>0.99984082</td><td>Malignant · correct</td><td>0.99559967</td><td>Malignant · correct</td></tr>
+<tr data-row="254"><th scope="row">254</th><td>Malignant (1)</td><td>0.99999028</td><td>Malignant · correct</td><td>0.99917165</td><td>Malignant · correct</td></tr>
+<tr data-row="236"><th scope="row">236</th><td>Malignant (1)</td><td>1.00000000</td><td>Malignant · correct</td><td>0.99999960</td><td>Malignant · correct</td></tr>
+<tr data-row="557"><th scope="row">557</th><td>Benign (0)</td><td>0.00049473</td><td>Benign · correct</td><td>0.01249157</td><td>Benign · correct</td></tr>
+<tr data-row="179"><th scope="row">179</th><td>Benign (0)</td><td>0.00006951</td><td>Benign · correct</td><td>0.00389052</td><td>Benign · correct</td></tr>
+<tr data-row="388"><th scope="row">388</th><td>Benign (0)</td><td>0.00002893</td><td>Benign · correct</td><td>0.00230590</td><td>Benign · correct</td></tr>
+<tr data-row="423"><th scope="row">423</th><td>Benign (0)</td><td>0.09516013</td><td>Benign · correct</td><td>0.23829403</td><td>Benign · correct</td></tr>
+<tr data-row="38"><th scope="row">38</th><td>Malignant (1)</td><td>0.80527089</td><td>Malignant · correct</td><td>0.73809036</td><td>Malignant · correct</td></tr>
+<tr data-row="64"><th scope="row">64</th><td>Malignant (1)</td><td>0.99298654</td><td>Malignant · correct</td><td>0.95896011</td><td>Malignant · correct</td></tr>
+<tr data-row="551"><th scope="row">551</th><td>Benign (0)</td><td>0.00150829</td><td>Benign · correct</td><td>0.02407543</td><td>Benign · correct</td></tr>
+<tr data-row="381"><th scope="row">381</th><td>Benign (0)</td><td>0.00032448</td><td>Benign · correct</td><td>0.00973021</td><td>Benign · correct</td></tr>
+<tr data-row="395"><th scope="row">395</th><td>Benign (0)</td><td>0.00369553</td><td>Benign · correct</td><td>0.04052773</td><td>Benign · correct</td></tr>
+<tr data-row="133"><th scope="row">133</th><td>Benign (0)</td><td>0.15222246</td><td>Benign · correct</td><td>0.30115126</td><td>Benign · correct</td></tr>
+<tr data-row="358"><th scope="row">358</th><td>Benign (0)</td><td>0.00008153</td><td>Benign · correct</td><td>0.00427890</td><td>Benign · correct</td></tr>
+<tr data-row="56"><th scope="row">56</th><td>Malignant (1)</td><td>0.99999886</td><td>Malignant · correct</td><td>0.99977087</td><td>Malignant · correct</td></tr>
+<tr data-row="8"><th scope="row">8</th><td>Malignant (1)</td><td>0.99082002</td><td>Malignant · correct</td><td>0.95206756</td><td>Malignant · correct</td></tr>
+<tr data-row="501"><th scope="row">501</th><td>Malignant (1)</td><td>0.94760489</td><td>Malignant · correct</td><td>0.87207324</td><td>Malignant · correct</td></tr>
+<tr data-row="24"><th scope="row">24</th><td>Malignant (1)</td><td>0.99999987</td><td>Malignant · correct</td><td>0.99993611</td><td>Malignant · correct</td></tr>
+<tr data-row="493"><th scope="row">493</th><td>Benign (0)</td><td>0.00001995</td><td>Benign · correct</td><td>0.00184651</td><td>Benign · correct</td></tr>
+<tr data-row="547"><th scope="row">547</th><td>Benign (0)</td><td>0.00008588</td><td>Benign · correct</td><td>0.00441367</td><td>Benign · correct</td></tr>
+<tr data-row="546"><th scope="row">546</th><td>Benign (0)</td><td>0.00008070</td><td>Benign · correct</td><td>0.00425287</td><td>Benign · correct</td></tr>
+<tr data-row="531"><th scope="row">531</th><td>Benign (0)</td><td>0.02409275</td><td>Benign · correct</td><td>0.11612359</td><td>Benign · correct</td></tr>
+<tr data-row="346"><th scope="row">346</th><td>Benign (0)</td><td>0.00181007</td><td>Benign · correct</td><td>0.02678341</td><td>Benign · correct</td></tr>
+<tr data-row="176"><th scope="row">176</th><td>Benign (0)</td><td>0.00002323</td><td>Benign · correct</td><td>0.00202237</td><td>Benign · correct</td></tr>
+<tr data-row="261"><th scope="row">261</th><td>Malignant (1)</td><td>0.83956290</td><td>Malignant · correct</td><td>0.76440729</td><td>Malignant · correct</td></tr>
+<tr data-row="88"><th scope="row">88</th><td>Benign (0)</td><td>0.07966171</td><td>Benign · correct</td><td>0.21778069</td><td>Benign · correct</td></tr>
+<tr data-row="288"><th scope="row">288</th><td>Benign (0)</td><td>0.00097789</td><td>Benign · correct</td><td>0.01867117</td><td>Benign · correct</td></tr>
+<tr data-row="229"><th scope="row">229</th><td>Malignant (1)</td><td>0.95839065</td><td>Malignant · correct</td><td>0.88737201</td><td>Malignant · correct</td></tr>
+<tr data-row="327"><th scope="row">327</th><td>Benign (0)</td><td>0.00013149</td><td>Benign · correct</td><td>0.00568832</td><td>Benign · correct</td></tr>
+<tr data-row="198"><th scope="row">198</th><td>Malignant (1)</td><td>0.99965332</td><td>Malignant · correct</td><td>0.99300531</td><td>Malignant · correct</td></tr>
+<tr data-row="165"><th scope="row">165</th><td>Benign (0)</td><td>0.00942437</td><td>Benign · correct</td><td>0.06910635</td><td>Benign · correct</td></tr>
+<tr data-row="243"><th scope="row">243</th><td>Benign (0)</td><td>0.02880856</td><td>Benign · correct</td><td>0.12788993</td><td>Benign · correct</td></tr>
+<tr data-row="156"><th scope="row">156</th><td>Malignant (1)</td><td>0.99847586</td><td>Malignant · correct</td><td>0.98318280</td><td>Malignant · correct</td></tr>
+<tr data-row="21"><th scope="row">21</th><td>Benign (0)</td><td>0.00003810</td><td>Benign · correct</td><td>0.00271754</td><td>Benign · correct</td></tr>
+<tr data-row="507"><th scope="row">507</th><td>Benign (0)</td><td>0.00021523</td><td>Benign · correct</td><td>0.00762576</td><td>Benign · correct</td></tr>
+<tr data-row="169"><th scope="row">169</th><td>Benign (0)</td><td>0.01221082</td><td>Benign · correct</td><td>0.07989709</td><td>Benign · correct</td></tr>
+<tr data-row="433"><th scope="row">433</th><td>Malignant (1)</td><td>0.99994387</td><td>Malignant · correct</td><td>0.99763766</td><td>Malignant · correct</td></tr>
+<tr data-row="30"><th scope="row">30</th><td>Malignant (1)</td><td>0.99999961</td><td>Malignant · correct</td><td>0.99987959</td><td>Malignant · correct</td></tr>
+<tr data-row="102"><th scope="row">102</th><td>Benign (0)</td><td>0.01387879</td><td>Benign · correct</td><td>0.08579586</td><td>Benign · correct</td></tr>
+<tr data-row="373"><th scope="row">373</th><td>Malignant (1)</td><td>0.99999011</td><td>Malignant · correct</td><td>0.99916299</td><td>Malignant · correct</td></tr>
+<tr data-row="82"><th scope="row">82</th><td>Malignant (1)</td><td>1.00000000</td><td>Malignant · correct</td><td>0.99999853</td><td>Malignant · correct</td></tr>
+<tr data-row="434"><th scope="row">434</th><td>Benign (0)</td><td>0.01033057</td><td>Benign · correct</td><td>0.07276387</td><td>Benign · correct</td></tr>
+<tr data-row="540"><th scope="row">540</th><td>Benign (0)</td><td>0.00006231</td><td>Benign · correct</td><td>0.00364505</td><td>Benign · correct</td></tr>
+<tr data-row="379"><th scope="row">379</th><td>Malignant (1)</td><td>0.97427701</td><td>Malignant · correct</td><td>0.91387807</td><td>Malignant · correct</td></tr>
+<tr data-row="31"><th scope="row">31</th><td>Malignant (1)</td><td>0.98728844</td><td>Malignant · correct</td><td>0.94223388</td><td>Malignant · correct</td></tr>
+<tr data-row="384"><th scope="row">384</th><td>Benign (0)</td><td>0.00206814</td><td>Benign · correct</td><td>0.02894800</td><td>Benign · correct</td></tr>
+<tr data-row="43"><th scope="row">43</th><td>Malignant (1)</td><td>0.90755037</td><td>Malignant · correct</td><td>0.82543504</td><td>Malignant · correct</td></tr>
+<tr data-row="330"><th scope="row">330</th><td>Malignant (1)</td><td>0.93897753</td><td>Malignant · correct</td><td>0.86088832</td><td>Malignant · correct</td></tr>
+<tr data-row="127"><th scope="row">127</th><td>Malignant (1)</td><td>0.99835439</td><td>Malignant · correct</td><td>0.98240544</td><td>Malignant · correct</td></tr>
+<tr data-row="185"><th scope="row">185</th><td>Benign (0)</td><td>0.00015056</td><td>Benign · correct</td><td>0.00616592</td><td>Benign · correct</td></tr>
+<tr data-row="189"><th scope="row">189</th><td>Benign (0)</td><td>0.00028358</td><td>Benign · correct</td><td>0.00898283</td><td>Benign · correct</td></tr>
+<tr data-row="118"><th scope="row">118</th><td>Malignant (1)</td><td>0.99992590</td><td>Malignant · correct</td><td>0.99721139</td><td>Malignant · correct</td></tr>
+<tr data-row="275"><th scope="row">275</th><td>Benign (0)</td><td>0.01567477</td><td>Benign · correct</td><td>0.09177595</td><td>Benign · correct</td></tr>
+<tr data-row="291"><th scope="row">291</th><td>Benign (0)</td><td>0.32597504</td><td>Benign · correct</td><td>0.43815415</td><td>Benign · correct</td></tr>
+<tr data-row="25"><th scope="row">25</th><td>Malignant (1)</td><td>0.99999682</td><td>Malignant · correct</td><td>0.99957541</td><td>Malignant · correct</td></tr>
+<tr data-row="190"><th scope="row">190</th><td>Malignant (1)</td><td>0.41470099</td><td class="incorrect">Benign · incorrect</td><td>0.49498979</td><td class="incorrect">Benign · incorrect</td></tr>
+<tr data-row="166"><th scope="row">166</th><td>Benign (0)</td><td>0.00001400</td><td>Benign · correct</td><td>0.00149409</td><td>Benign · correct</td></tr>
+<tr data-row="374"><th scope="row">374</th><td>Benign (0)</td><td>0.00316616</td><td>Benign · correct</td><td>0.03706654</td><td>Benign · correct</td></tr>
+<tr data-row="390"><th scope="row">390</th><td>Benign (0)</td><td>0.00005684</td><td>Benign · correct</td><td>0.00345063</td><td>Benign · correct</td></tr>
+<tr data-row="159"><th scope="row">159</th><td>Benign (0)</td><td>0.00009754</td><td>Benign · correct</td><td>0.00476149</td><td>Benign · correct</td></tr>
+<tr data-row="519"><th scope="row">519</th><td>Benign (0)</td><td>0.01073483</td><td>Benign · correct</td><td>0.07434644</td><td>Benign · correct</td></tr>
+<tr data-row="215"><th scope="row">215</th><td>Malignant (1)</td><td>0.45711416</td><td class="incorrect">Benign · incorrect</td><td>0.52080944</td><td>Malignant · correct</td></tr>
+<tr data-row="427"><th scope="row">427</th><td>Benign (0)</td><td>0.02318665</td><td>Benign · correct</td><td>0.11373280</td><td>Benign · correct</td></tr>
+<tr data-row="139"><th scope="row">139</th><td>Benign (0)</td><td>0.00009186</td><td>Benign · correct</td><td>0.00459411</td><td>Benign · correct</td></tr>
+<tr data-row="484"><th scope="row">484</th><td>Benign (0)</td><td>0.08035198</td><td>Benign · correct</td><td>0.21873859</td><td>Benign · correct</td></tr>
+<tr data-row="323"><th scope="row">323</th><td>Malignant (1)</td><td>0.99999999</td><td>Malignant · correct</td><td>0.99998651</td><td>Malignant · correct</td></tr>
+<tr data-row="370"><th scope="row">370</th><td>Malignant (1)</td><td>0.99995440</td><td>Malignant · correct</td><td>0.99791332</td><td>Malignant · correct</td></tr>
+<tr data-row="309"><th scope="row">309</th><td>Benign (0)</td><td>0.00041326</td><td>Benign · correct</td><td>0.01122967</td><td>Benign · correct</td></tr>
+<tr data-row="167"><th scope="row">167</th><td>Malignant (1)</td><td>0.98321820</td><td>Malignant · correct</td><td>0.93233240</td><td>Malignant · correct</td></tr>
+<tr data-row="545"><th scope="row">545</th><td>Benign (0)</td><td>0.03758566</td><td>Benign · correct</td><td>0.14740529</td><td>Benign · correct</td></tr>
+<tr data-row="136"><th scope="row">136</th><td>Benign (0)</td><td>0.00211156</td><td>Benign · correct</td><td>0.02930045</td><td>Benign · correct</td></tr>
+<tr data-row="541"><th scope="row">541</th><td>Benign (0)</td><td>0.42046121</td><td>Benign · correct</td><td>0.49853437</td><td>Benign · correct</td></tr>
+<tr data-row="60"><th scope="row">60</th><td>Benign (0)</td><td>0.00009634</td><td>Benign · correct</td><td>0.00472645</td><td>Benign · correct</td></tr>
+<tr data-row="495"><th scope="row">495</th><td>Benign (0)</td><td>0.10537539</td><td>Benign · correct</td><td>0.25082547</td><td>Benign · correct</td></tr>
+<tr data-row="552"><th scope="row">552</th><td>Benign (0)</td><td>0.06751481</td><td>Benign · correct</td><td>0.20012090</td><td>Benign · correct</td></tr>
+<tr data-row="259"><th scope="row">259</th><td>Malignant (1)</td><td>0.99998634</td><td>Malignant · correct</td><td>0.99898483</td><td>Malignant · correct</td></tr>
+<tr data-row="442"><th scope="row">442</th><td>Benign (0)</td><td>0.00030105</td><td>Benign · correct</td><td>0.00930718</td><td>Benign · correct</td></tr>
+<tr data-row="356"><th scope="row">356</th><td>Benign (0)</td><td>0.02902641</td><td>Benign · correct</td><td>0.12840882</td><td>Benign · correct</td></tr>
+<tr data-row="317"><th scope="row">317</th><td>Malignant (1)</td><td>0.99834176</td><td>Malignant · correct</td><td>0.98232605</td><td>Malignant · correct</td></tr>
+<tr data-row="424"><th scope="row">424</th><td>Benign (0)</td><td>0.00233212</td><td>Benign · correct</td><td>0.03104431</td><td>Benign · correct</td></tr>
+<tr data-row="249"><th scope="row">249</th><td>Benign (0)</td><td>0.00238079</td><td>Benign · correct</td><td>0.03141932</td><td>Benign · correct</td></tr>
+<tr data-row="543"><th scope="row">543</th><td>Benign (0)</td><td>0.10217215</td><td>Benign · correct</td><td>0.24697065</td><td>Benign · correct</td></tr>
+<tr data-row="483"><th scope="row">483</th><td>Benign (0)</td><td>0.01736095</td><td>Benign · correct</td><td>0.09709307</td><td>Benign · correct</td></tr>
+<tr data-row="183"><th scope="row">183</th><td>Benign (0)</td><td>0.00005818</td><td>Benign · correct</td><td>0.00349878</td><td>Benign · correct</td></tr>
+<tr data-row="172"><th scope="row">172</th><td>Malignant (1)</td><td>0.97922726</td><td>Malignant · correct</td><td>0.92364440</td><td>Malignant · correct</td></tr>
+<tr data-row="366"><th scope="row">366</th><td>Malignant (1)</td><td>0.99999954</td><td>Malignant · correct</td><td>0.99986683</td><td>Malignant · correct</td></tr>
+<tr data-row="566"><th scope="row">566</th><td>Malignant (1)</td><td>0.98151940</td><td>Malignant · correct</td><td>0.92852969</td><td>Malignant · correct</td></tr>
+<tr data-row="499"><th scope="row">499</th><td>Malignant (1)</td><td>0.99999474</td><td>Malignant · correct</td><td>0.99942633</td><td>Malignant · correct</td></tr>
+<tr data-row="97"><th scope="row">97</th><td>Benign (0)</td><td>0.00002892</td><td>Benign · correct</td><td>0.00230521</td><td>Benign · correct</td></tr>
+<tr data-row="393"><th scope="row">393</th><td>Malignant (1)</td><td>0.99999994</td><td>Malignant · correct</td><td>0.99996020</td><td>Malignant · correct</td></tr>
+<tr data-row="536"><th scope="row">536</th><td>Malignant (1)</td><td>0.73662737</td><td>Malignant · correct</td><td>0.69039325</td><td>Malignant · correct</td></tr>
+<tr data-row="420"><th scope="row">420</th><td>Benign (0)</td><td>0.00832767</td><td>Benign · correct</td><td>0.06445130</td><td>Benign · correct</td></tr>
+<tr data-row="173"><th scope="row">173</th><td>Benign (0)</td><td>0.00000629</td><td>Benign · correct</td><td>0.00092639</td><td>Benign · correct</td></tr>
+<tr data-row="454"><th scope="row">454</th><td>Benign (0)</td><td>0.01349902</td><td>Benign · correct</td><td>0.08448420</td><td>Benign · correct</td></tr>
+<tr data-row="298"><th scope="row">298</th><td>Benign (0)</td><td>0.01439039</td><td>Benign · correct</td><td>0.08753576</td><td>Benign · correct</td></tr>
 </tbody></table></div></details>
     </section>
 
     <section id="comparison" class="investigation" aria-labelledby="comparison-heading">
-      <div class="section-heading"><div><p class="eyebrow">03 / TWO QUESTIONS, TWO ANSWERS</p><h2 id="comparison-heading">What counts as better?</h2></div><p>Full-cohort metrics always use all 114 records. Changing the deferral threshold below does not change this comparison.</p></div>
+      <div class="section-heading"><div><p class="eyebrow">03 / MODEL COMPARISON</p><h2 id="comparison-heading">What counts as better?</h2></div><p>Calibration changed one classification. For 112 of the 114 samples, the new probability moved farther from the recorded outcome.</p></div>
       <div class="comparison-scroll" tabindex="0" role="region" aria-label="Full-cohort metric comparison"><table class="comparison-table"><caption class="sr-only">Recomputed full-cohort metrics, raw and calibrated</caption><thead><tr><th scope="col">Metric</th><th scope="col" class="raw-heading">Raw logistic</th><th scope="col" class="cal-heading">Sigmoid calibrated</th><th scope="col">What changed?</th></tr></thead><tbody id="comparison-body"><tr><th scope="row">Accuracy <small>Correct / all test records</small></th><td>112 / 114 <small>98.25%</small></td><td>113 / 114 <small>99.12%</small></td><td>One more correct label</td></tr><tr><th scope="row">Brier score <small>Mean (probability − label)²</small></th><td>0.01209</td><td>0.02050</td><td class="adverse">Worse probability error</td></tr><tr><th scope="row">False negatives <small>Malignant predicted benign</small></th><td>2 / 42</td><td>1 / 42</td><td>One error remains</td></tr><tr><th scope="row">False positives <small>Benign predicted malignant</small></th><td>0 / 72</td><td>0 / 72</td><td>Unchanged</td></tr><tr><th scope="row">True positives <small>Malignant predicted malignant</small></th><td>40 / 42</td><td>41 / 42</td><td>One more positive identified</td></tr><tr><th scope="row">True negatives <small>Benign predicted benign</small></th><td>72 / 72</td><td>72 / 72</td><td>Unchanged</td></tr><tr><th scope="row">Log loss <small>Mean negative log probability; lower is better</small></th><td>0.05198</td><td>0.09642</td><td class="adverse">Also worsens</td></tr><tr><th scope="row">AUROC <small>Pairwise ranking; higher is better</small></th><td>0.999669</td><td>0.999669</td><td>Unchanged ranking</td></tr></tbody></table></div>
-      <div class="interpretation"><div><span class="eyebrow">WHY THEY DISAGREE</span><h3>A label crosses a boundary.<br>A score counts every distance.</h3></div><p>Accuracy only asks which side of 0.5 a probability falls on. Brier score uses the distance between every probability and its recorded binary label. A calibration step can repair one label while making the overall probability error larger.</p></div>
-      <details class="uncertainty"><summary>Read the uncertainty, including what it leaves out</summary><div id="uncertainty-detail"><p>The original run uses 2,000 seeded test-row bootstrap replicates for Brier and AUROC, with paired resampling for the Brier difference. These intervals condition on this fitted model and this split; they do not include retraining variability.</p></div><p>Wilson binomial intervals describe observed proportions. Corruption-mask ranges belong to the separate missingness study and are not population confidence intervals. Repeated masks reuse the same test cohort. No result here establishes subgroup performance, clinical utility, or a universal best model.</p></details>
-    </section>
-
-    <section id="deferral" class="investigation" aria-labelledby="deferral-heading">
-      <div class="section-heading"><div><p class="eyebrow">04 / OPTIONAL THRESHOLD INSPECTION</p><h2 id="deferral-heading">What does deferring leave out?</h2></div><p>Inspect the seven thresholds fixed in the original protocol. This is a descriptive comparison, not threshold selection or a deployment recommendation.</p></div>
-      <div class="deferral-panel"><div class="threshold-control"><label for="threshold">Minimum confidence to retain a calibrated prediction</label><select id="threshold" disabled><option value="0.5">50% · retain all</option><option value="0.6">60%</option><option value="0.7">70%</option><option value="0.8">80%</option><option value="0.9">90%</option><option value="0.95">95%</option><option value="0.99">99%</option></select><p>Confidence = max(p, 1 − p). The class decision stays at 0.5.</p></div><div id="selective-summary" class="selective-summary" aria-live="polite" aria-atomic="true"><div><strong>114 <small>/ 114</small></strong><span>retained</span></div><div><strong>0 <small>/ 114</small></strong><span>deferred</span></div><div><strong>113 <small>/ 114</small></strong><span>correct among retained</span></div></div></div>
-      <p id="selective-errors" class="footnote">At 50%: 1 false negative and 0 false positives among the 114 retained records. All 42 malignant records are retained.</p><p class="caution">A smaller retained cohort can look more accurate while excluding difficult records. Zero observed errors is not zero population risk. No downstream outcome of deferral or human review was evaluated.</p>
+      <div class="interpretation"><div><h3>How can both scores rise?</h3></div><p>Accuracy counts the correct labels at the 50% cutoff. The Brier score averages the squared distance from each probability to its recorded outcome, 1 for malignant and 0 for benign. A smaller distance improves the score even when the label stays the same.</p></div>
+      <details class="uncertainty"><summary>How much uncertainty is there?</summary><div id="uncertainty-detail"><p>The original run resampled the same 114 test records 2,000 times. It used paired samples for the Brier difference. These intervals describe the fitted models on this split and exclude variation from retraining.</p></div></details>
     </section>
 
     <section id="receipt" class="investigation receipt" aria-labelledby="receipt-heading">
-      <div class="section-heading"><div><p class="eyebrow">05 / EXPERIMENT RECEIPT</p><h2 id="receipt-heading">A result you can trace.</h2></div><a class="download-link" href="observatory-receipt.json" download>Download receipt <span aria-hidden="true">↓</span></a></div>
-      <div class="receipt-grid"><dl id="receipt-fields"><div><dt>Dataset</dt><dd>Wisconsin Diagnostic Breast Cancer · 569 records · 30 features</dd></div><div><dt>Model</dt><dd>StandardScaler → logistic regression C=1; frozen pipeline → held-out sigmoid calibration</dd></div><div><dt>Split</dt><dd>341 train / 114 calibration / 114 test · seed 20261113</dd></div><div><dt>Analysis date</dt><dd>13 November 2026 · scikit-learn 1.8.0 · Python 3.12.14</dd></div><div><dt>Source</dt><dd><a href="https://doi.org/10.24432/C5DW2B">UCI WDBC · DOI 10.24432/C5DW2B</a> · CC BY 4.0</dd></div><div><dt>Verification</dt><dd>Frozen prediction recomputation; absolute metric tolerance 1 × 10<sup>−12</sup>. Integer counts match exactly.</dd></div></dl><aside><h3>Where this result stops</h3><p>One historical benchmark, one fixed split. No external-site, prospective, clinical-utility, or protected-group validation.</p><p>No training or calibration happens in this browser. Newly designed experiments must have a versioned protocol before they run.</p><p>Interval and missingness studies remain <a href="./">separate recorded experiments</a>. The browser summary cannot replay every missingness mask.</p></aside></div>
+      <div class="section-heading"><div><p class="eyebrow">04 / EXPERIMENT RECEIPT</p><h2 id="receipt-heading">Trace the result.</h2></div><a class="download-link" href="observatory-receipt.json" download>Download receipt <span aria-hidden="true">↓</span></a></div>
+      <div class="receipt-grid"><dl id="receipt-fields"><div><dt>Dataset</dt><dd>Wisconsin Diagnostic Breast Cancer · 569 records · 30 features</dd></div><div><dt>Model</dt><dd>Standardized inputs, logistic regression (C=1), then sigmoid calibration on a separate partition.</dd></div><div><dt>Split</dt><dd>341 train / 114 calibration / 114 test · seed 20261113</dd></div><div><dt>Analysis date</dt><dd>13 November 2026 · scikit-learn 1.8.0 · Python 3.12.14</dd></div><div><dt>Source</dt><dd><a href="https://doi.org/10.24432/C5DW2B">UCI WDBC · DOI 10.24432/C5DW2B</a> · CC BY 4.0</dd></div><div><dt>Verification</dt><dd>Recomputed from saved predictions with an absolute metric tolerance of 1 × 10<sup>−12</sup>. Integer counts match exactly.</dd></div></dl><aside><h3>What this study covers</h3><p>The results come from one split of one historical dataset. They describe benchmark performance. Clinical use would require separate validation across sites and patient groups.</p><p>The <a href="./">Medical AI lab</a> also studies uncertainty in diabetes progression estimates and missing measurements in heart failure records.</p></aside></div>
       <details class="receipt-json"><summary>Inspect the complete machine-readable receipt</summary><pre id="receipt-json">The receipt is available at observatory-receipt.json.</pre></details>
       <div class="methods-links"><a href="protocol.md">Original protocol ↗</a><a href="calibration.html">Full calibration report ↗</a><a href="results.json" download>Frozen results ↓</a><a href="https://github.com/bomberJV/medical-ai-research">Source repository ↗</a></div>
-      <p class="footnote">Dataset creators: William Wolberg, Olvi Mangasarian, Nick Street, W. Street (as recorded in the provenance ledger). Source attribution and license remain attached to the receipt. Analysis and writing were AI-assisted. Not peer-reviewed.</p>
+      <p class="footnote">The dataset credits William Wolberg, Olvi Mangasarian, Nick Street and W. Street. Source attribution and license remain attached to the receipt. Analysis and writing were AI-assisted. Not peer-reviewed.</p>
     </section>
     <noscript><div class="scope"><b>JavaScript is off.</b> The recorded comparison, methods, and limitations remain readable above. For all 114 individual predictions, use the complete record table above, or open <a href="results.json">the frozen results</a> and its <a href="observatory-receipt.json">experiment receipt</a>.</div></noscript>
   </main>

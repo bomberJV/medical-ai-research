@@ -29,18 +29,18 @@ python3 -m http.server 8000 --directory site
 
 Open http://localhost:8000/medical/. The view uses recorded results; it does not retrain models or send health data anywhere. You can explore confidence thresholds, conformal coverages, model comparisons, and paired missingness masks. The reports can be printed to PDF from a browser.
 
-## AI Reliability Observatory
+## Calibration in the Medical AI lab
 
-The calibration comparison is available at `site/medical/observatory.html` (with the server above, open http://localhost:8000/medical/observatory.html). Inspect any of the 114 held-out WDBC records, compare raw and sigmoid-calibrated probabilities, and download the experiment receipt. Accuracy, Brier score, AUROC and confusion counts are independently recomputed from frozen predictions. The complete cohort stays visible when inspecting the protocol's fixed abstention thresholds.
+Open the [calibration study](site/medical/observatory.html) from the lab. Source row 215 was recorded as malignant. Sigmoid calibration shifted its estimated probability from 45.71% to 52.08%, crossing the 50% decision threshold. This accounts for the change from 112 to 113 correct classifications in 114 held-out records. Across those same records the Brier score worsened from 0.01209 to 0.02050. Inspect any record to compare both probabilities, or open the receipt to trace the result to the dataset and protocol.
 
-This view reuses the recorded November 13 run. It does not train a new model, tune thresholds or establish clinical validation. The receipt includes dataset and split hashes, model configuration, metric definitions, uncertainty scope, original environment and explicit unknown historical metadata. Expanded interval and missingness Observatory views remain follow-on work; the existing notebook studies remain available.
+The study uses the recorded November 13 run. Accuracy, Brier score, AUROC and confusion counts are independently recomputed from its frozen predictions. The receipt gives the dataset and split hashes, model configuration, metric definitions, uncertainty scope and recorded environment for this benchmark split.
 
 ```sh
 python research/build_observatory.py --check
 npm test
 ```
 
-The receipt exporter uses only the Python standard library. See [the versioned Observatory export contract](research/OBSERVATORY.md) for regeneration, verification tolerances and acceptance boundaries.
+The receipt exporter uses only the Python standard library. See the [calibration export contract](research/OBSERVATORY.md) for regeneration, verification tolerances and acceptance boundaries.
 
 ## Experiments
 

@@ -1,6 +1,6 @@
-# Calibration Observatory verification
+# Medical AI calibration study verification
 
-Review date: 2026-11-21 (America/New_York). Baseline source: `e684514f15e587e87c179009e34a302b1eece9cb`.
+Reviewed November 25, 2026. The archived analysis uses baseline source `e684514f15e587e87c179009e34a302b1eece9cb`.
 
 This change adds an inspectable view of the frozen November 13 analysis. It does not create a new fitted model, evaluation split, bootstrap run or clinical-validation result.
 
@@ -15,11 +15,11 @@ This change adds an inspectable view of the frozen November 13 analysis. It does
 | False negatives / malignant records | 2 / 42 | 1 / 42 |
 | False positives / benign records | 0 / 72 | 0 / 72 |
 
-Independent JavaScript and Python recomputations match stored metrics within absolute tolerance 1e-12, with exact integer counts. Source row 215 changes from false negative to true positive; source row 190 remains false negative. The initial displayed record is the first in the original test order, not a selected success. Full cohort metrics remain fixed during threshold inspection.
+Independent JavaScript and Python recomputations match stored metrics within absolute tolerance 1e-12, with exact integer counts. The page leads with row 215 because it is the only record to cross the fixed 50% cutoff. Its malignancy probability rises from 45.71% to 52.08%. Row 190 remains a false negative. The 114 records retain their original test order and all contribute to the reported metrics.
 
 ## Passed checks
 
-- `node --test tests/*.test.mjs`: 20 tests, including 7 existing tests, metric corruption fixtures, receipt binding, static cohort integrity, controller selection/deferral and fetch/receipt failure paths.
+- All 23 Node tests passed with `node --test tests/*.test.mjs`. They cover metric and receipt validation, the static cohort, the featured record, contextual keyboard selection, the source link after loading and the fallback when verification fails.
 - `python -m unittest discover -s tests -p '*_test.py'`: 7 independent receipt tests.
 - `python research/build_observatory.py --check`: deterministic receipt and frozen metrics match.
 - `node research/build_observatory_view.mjs --check`: complete static 114-row table and cohort match the frozen adapter.
@@ -28,10 +28,12 @@ Independent JavaScript and Python recomputations match stored metrics within abs
 
 Source inspection confirms training-only scaling/logistic fitting and calibration-only sigmoid fitting around a frozen estimator. The original research and site `results.json` bytes are unchanged. The receipt distinguishes original-byte hashes, LF-normalized text hashes and structured hashes.
 
-The local verification environment was Windows, Python 3.12.9, NumPy 1.26.4 and scikit-learn 1.7.0. Only existing-output verification ran there. It is not the archived fitting environment recorded in the receipt; no claim of a pinned-environment training replay is made.
+An independent refit on Windows with scikit-learn 1.7.0 reproduced all 114 pairs of stored predictions to within 2.2 × 10⁻¹⁵. The archived fit used scikit-learn 1.8.0. The source dataset fingerprint and all held-out labels matched the archive.
 
-## Pending review and boundaries
+## Browser review
 
-Actual browser rendering, 390px/mobile/tablet/desktop layouts, 200% zoom, keyboard focus and screen-reader operation still need review. The connected browser could not reach the local HTTP preview; browser security policy also rejected local-file navigation. Controller tests use a small Node test harness, not a real browser or accessibility audit. No screenshots or browser performance measurements are claimed.
+Chrome touch emulation at 390 × 844 confirmed that selecting test record 81 (source row 215) displays both 45.71% and 52.08% beside the selection in the grid and the expanded table. The same interaction passed with a desktop mouse. Arrow keys, Home and End move among records and Tab exits each view. Both the hosted page and the offline preview preserve the direct dataset link and expose all 114 records with scripting disabled.
 
-The delivered checks cover A-01–A-03 and A-06–A-08 for frozen calibration arithmetic, provenance and reporting. They do not prove the behavior of an unrecorded historical execution, independently replay archived bootstrap samples, or fulfill A-04/A-05 expansions. Full missingness replay still requires the research pipeline or new per-mask exports. Interval/missingness Observatory views, new protocols and homepage/film integration remain follow-on work. Publication and deployment are not part of this PR.
+Six viewport sizes from 320 to 1440 pixels wide passed reflow checks. At 200% browser zoom the page reflowed to 629 CSS pixels wide, and the selected estimates remained in view. The selected button's accessible name and pressed state were checked in Chrome's accessibility tree. Physical iPhone Safari and spoken screen-reader output remain unverified.
+
+The delivered checks cover A-01–A-03 and A-06–A-08 for frozen calibration arithmetic, provenance and reporting. The Medical AI lab retains its existing confidence-threshold, interval and missingness experiments. The November 24 revision of §5 scopes this addition to the lab's calibration study on the Projects page.
